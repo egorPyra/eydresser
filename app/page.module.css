@@ -2,8 +2,9 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  align-items: center;
+  /* align-items: center; */
   padding: 6rem;
+  /* color: red; */
   min-height: 100vh;
 }
 
