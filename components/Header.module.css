@@ -1,0 +1,56 @@
+.headerContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 0rem;
+    background-color: rgba(var(--background-start-rgb), 1);
+  }
+  
+  .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: bold;
+    color: rgb(var(--foreground-rgb));
+    text-align: center;
+    flex-grow: 1;
+    margin-left: -5rem;
+  }
+  
+  .button {
+    background-color: rgba(var(--background-second-rgb), 1);
+    color: rgb(var(--foreground-rgb));
+    border: none;
+    border-radius: var(--border-radius);
+    padding: 0.5rem 2rem 0.5rem 1rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition:  filter 0.3s;
+    font-family: "Raleway";
+    z-index: 1;
+    height: 2.5rem;
+  }
+  
+  .button:hover {
+    filter: brightness(80%);
+  }
+
+  .buttonAccent {
+    background-color: rgba(var(--accent-color-rgb), 1);
+    color: rgb(var(--foreground-rgb));
+    border: none;
+    border-radius: var(--border-radius);
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition:  filter 0.3s;
+    font-family: "Raleway";
+    margin-left: -1.2rem ;
+    z-index: 2;
+    height: 2.5rem;
+
+  }
+  
+  .buttonAccent:hover {
+    filter: brightness(80%);
+  }
+  

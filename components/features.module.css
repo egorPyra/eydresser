@@ -1,0 +1,39 @@
+
+.box {
+    margin-top: 5rem;
+}
+
+
+.title {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.cardsBox {
+    display: flex;
+    justify-content: center;
+}
+
+.card {
+    flex: 1;
+    max-width: 25rem;
+    height: 30rem;
+    background-color: rgb(var(--background-second-rgb));
+    margin-right: 1rem;
+    padding: 2.2rem;
+    border-radius: var(--border-radius);
+}
+
+.card img {
+    width: 100%;
+    object-fit: contain;
+}
+
+.card:last-child {
+    margin-right: 0;
+}
+
+
+.cardTextBox h3 {
+    margin: 3rem 0;
+}

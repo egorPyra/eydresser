@@ -1,0 +1,36 @@
+.container {
+    display: flex;
+  }
+  
+  .textContainer {
+    flex: 2; 
+    vertical-align: middle;
+    margin: auto 0;
+  }
+  
+  .imageContainer {
+    flex: 1; 
+  }
+  
+  .imageContainer img {
+    max-width: 100%;
+    height: auto;
+    mix-blend-mode: multiply;
+  }
+  
+
+  .button {
+    background-color: rgba(var(--button-color-rgb), 1);
+    color: rgb(var(--background-start-rgb));
+    border: none;
+    text-align: center;
+    border-radius: var(--border-radius);
+    padding: 0.5rem 1.5rem;
+    font-size: 1.3rem;
+    cursor: pointer;
+    transition:  filter 0.3s;
+    font-family: "Raleway";
+    z-index: 1;
+    height: 2.5rem;
+    margin: 20px 0;
+  }
