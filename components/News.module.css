@@ -1,0 +1,113 @@
+
+.container {
+    margin-top: 12rem;
+}
+
+.title {
+    text-align: center;
+}
+
+
+.box {
+    width: 100%;
+    /* border: 1px black solid; */
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.card {
+    position: relative;
+    width: 98%;
+    /* border: red 1px solid; */
+    border-radius: 20px;
+    height: 25rem;
+    background-color: rgb(var(--background-second-rgb));
+    transition: all 0.5s ease;
+    cursor: pointer;
+}
+
+.card:hover {
+    transform: scale(1.01);
+}
+
+
+.imageCard {
+    width: 100%;
+    height: 50%;
+    object-fit: cover;
+    border-radius: 20px;
+}
+
+.cardText { 
+    padding: 0 5%;
+    width: 100%;
+    height: 11.3rem;
+    white-space: wrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  
+}
+
+.cardText h3 {
+    margin-bottom: 1.4rem;
+}
+
+
+.meta {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: row;
+}
+
+.meta img {
+    margin-right: 10px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+
+.category {
+    position: absolute;
+    top: 9.5rem;
+    left: 10px;
+    width: 20%;
+    min-width: 7rem;
+    height: 10%;
+    background-color: rgb(var(--accent-color-rgb));
+    border-radius: 12px;
+    padding: 1%;
+    text-align: center;
+}
+
+
+.link {
+    display: block;
+    max-width: 45vw;
+}
+
+
+.allNewsButton {
+    text-align: center;
+    margin: 5rem auto;
+    border-radius: 12px;
+    background-color: rgb(var(--button-color-rgb));
+    width: 14rem;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer; /* Pointer cursor on hover */
+    text-align: center;
+    transition: all 0.3s ease-in-out;
+}
+
+.allNewsButton:hover {
+    filter: brightness(93%);
+}
+
+
+
+.allNewsButton h6 {
+    color: rgb(var(--background-start-rgb));
+}

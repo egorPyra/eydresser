@@ -11,7 +11,7 @@ export default function Features() {
             <div className={styles.cardsBox}>
                 <div className={styles.card}>
                     <Image
-                        src="/sample.jpg"
+                        src="/cut.gif"
                         alt="eydresser Logo"
                         className={styles.logo}
                         width={350}
@@ -37,7 +37,7 @@ export default function Features() {
                 </div>
                 <div className={styles.card}>
                     <Image
-                        src="/sample.jpg"
+                        src="/inspiration.gif"
                         alt="eydresser Logo"
                         className={styles.logo}
                         width={350}
