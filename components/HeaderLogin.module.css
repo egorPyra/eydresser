@@ -13,7 +13,7 @@
     color: rgb(var(--foreground-rgb));
     text-align: center;
     flex-grow: 1;
-    /* margin-left: -5rem; */
+    margin-left: -5rem;
   }
   
   .button {

@@ -1,12 +1,13 @@
 import React from 'react';
 import Link from 'next/link';
-import styles from './Header.module.css';
+import styles from './HeaderLogin.module.css';
 import Image from 'next/image';
 
-const Header: React.FC = () => {
+const HeaderLogin: React.FC = () => {
   return (
     <header className={styles.headerContainer}>
-      
+      <button className={styles.button}>Вход</button>
+      <button className={styles.buttonAccent}>Регистрация</button>
       <div className={styles.logo}>
       <Image
               src="/logo.svg"
@@ -17,10 +18,10 @@ const Header: React.FC = () => {
               priority
             />
       </div>
-      
+      <div style={{ width: '45px' }}></div>  {/* empty */}
       
     </header>
   );
 };
 
-export default Header;
+export default HeaderLogin;

@@ -44,7 +44,7 @@ export default function News() {
                                     height={20}
                                     priority
                                 />
-                                <p>John John</p>
+                                <p>Antonio Banderas</p>
 
                             </div>
                             <h3>Неделя моды в Париже 2024</h3>
@@ -86,7 +86,7 @@ export default function News() {
                                     height={20}
                                     priority
                                 />
-                                <p>John John</p>
+                                <p>Antonio Banderas</p>
 
                             </div>
                             <h3>Гайд по выбору очков на лето</h3>
@@ -95,7 +95,7 @@ export default function News() {
                     </div>
                 </Link>
             </div>
-            <Link href="/" className={styles.allNewsButton}>
+            <Link href="/news" className={styles.allNewsButton}>
             <div className={styles.allNewsButton}>
                 <h6>Все новости</h6>
             </div>

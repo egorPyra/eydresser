@@ -1,14 +1,15 @@
 import Image from "next/image";
 import styles from "./page.module.css";
-import Header from "@/components/Header";
+import Header from "@/components/HeaderLogin";
 import Hero from "@/components/Hero";
 import Features from "@/components/features";
 import News from "@/components/News";
+import HeaderLogin from "@/components/HeaderLogin";
 
 export default function Home() {
   return (
     <>
-    <Header />
+    <HeaderLogin />
     <Hero />
     <Features />
     <News />
