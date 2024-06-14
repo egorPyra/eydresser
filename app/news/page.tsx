@@ -10,7 +10,7 @@ const NewsPage = () => {
             <h5 className={styles.title}><span style={{ color: 'rgb(var(--accent-color-rgb))' }}>ey|</span>взгляд</h5>
             <h1 className={styles.sensation}>Свежие выпуски: прямо из редакции</h1>
             <div className={styles.box}>
-                <Link href="/" className={styles.link}>
+                <Link href="/news/p" className={styles.link}>
                     <div className={styles.card}>
                         <Image
                             src="/sample1.jpg"
