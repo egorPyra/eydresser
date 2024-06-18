@@ -1,0 +1,78 @@
+.container {
+    position: relative;
+    width: 100%;
+    margin: 0 auto;
+  }
+  
+  .image {
+    width: 100%;
+    max-height: 600px;
+    object-fit: cover;
+    background: #fff;
+  }
+  
+  .overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 250px;
+    background: linear-gradient(to top, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
+  }
+  
+  .textBlock {
+    width: 100%;
+    position: absolute;
+    bottom: 10px;
+
+    color: white;
+  }
+  
+  .text {
+    text-align: center;
+    color: #fff;
+  }
+  
+  .author {
+    color: #fff;
+  }
+  
+  .about {
+    width: 100%;
+    display: flex;
+    text-align: center;
+    margin: 0% auto;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    
+  }
+
+  .divider {
+    margin: auto 1rem;
+    color: #fff;
+  }
+
+  .timeContainer {
+    display: flex;
+    align-items: center;
+    margin: 1rem 0;
+    color: #fff;
+  }
+  
+  .timeIcon {
+    margin-right: 4px;
+    max-height: 18px;
+  }
+  
+  .timeText {
+    color: #fff;
+    margin: 0;
+  }
+  
+  .watch {
+    filter: invert(1);
+    margin-right: 12px;
+  }
