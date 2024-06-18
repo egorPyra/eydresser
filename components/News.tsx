@@ -10,10 +10,10 @@ export default function News() {
             <h1 className={styles.title}><span style={{ color: 'rgb(var(--accent-color-rgb))' }}>ey|</span>взгляд</h1>
 
             <div className={styles.box}>
-                <Link href="/" className={styles.link}>
+                <Link href="/news/p1" className={styles.link}>
                     <div className={styles.card}>
                         <Image
-                            src="/sample1.jpg"
+                            src="/covers/p1.jpg"
                             alt=""
                             className={styles.imageCard}
                             width={660}
@@ -52,10 +52,10 @@ export default function News() {
                         </div>
                     </div>
                 </Link>
-                <Link href="/" className={styles.link}>
+                <Link href="/news/p2" className={styles.link}>
                     <div className={styles.card}>
                         <Image
-                            src="/sunglasses.png"
+                            src="/covers/p2.png"
                             alt=""
                             className={styles.imageCard}
                             width={660}

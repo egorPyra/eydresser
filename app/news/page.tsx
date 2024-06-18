@@ -1,7 +1,11 @@
+'use client'
+
 import Link from 'next/link';
 import styles from '@/app/news/page.module.css';
 import Header from '@/components/Header';
 import Image from "next/image";
+import { useRouter } from 'next/navigation';
+
 
 const NewsPage = () => {
     return (
@@ -10,10 +14,10 @@ const NewsPage = () => {
             <h5 className={styles.title}><span style={{ color: 'rgb(var(--accent-color-rgb))' }}>ey|</span>взгляд</h5>
             <h1 className={styles.sensation}>Свежие выпуски: прямо из редакции</h1>
             <div className={styles.box}>
-                <Link href="/news/p" className={styles.link}>
+                <Link href="/news/p1" className={styles.link}>
                     <div className={styles.card}>
                         <Image
-                            src="/sample1.jpg"
+                            src="/covers/p1.jpg"
                             alt=""
                             className={styles.imageCard}
                             width={660}
@@ -52,10 +56,10 @@ const NewsPage = () => {
                         </div>
                     </div>
                 </Link>
-                <Link href="/" className={styles.link}>
+                <Link href="/news/p2" className={styles.link}>
                     <div className={styles.card}>
                         <Image
-                            src="/sunglasses.png"
+                            src="/covers/p2.png"
                             alt=""
                             className={styles.imageCard}
                             width={660}
@@ -96,10 +100,10 @@ const NewsPage = () => {
                 </Link>
             </div>
             <div className={styles.box}>
-                <Link href="/" className={styles.link}>
+                <Link href="/news/p3" className={styles.link}>
                     <div className={styles.card}>
                         <Image
-                            src="/sample1.jpg"
+                            src="/covers/p3.webp"
                             alt=""
                             className={styles.imageCard}
                             width={660}
@@ -107,7 +111,7 @@ const NewsPage = () => {
                             priority
                         />
                         <div className={styles.category}>
-                            <h3>Показы</h3>
+                            <h3>Здоровье</h3>
                         </div>
 
                         <div className={styles.cardText}>
@@ -133,15 +137,15 @@ const NewsPage = () => {
                                 <p>Antonio Banderas</p>
 
                             </div>
-                            <h3>Неделя моды в Париже 2024</h3>
-                            <p>Самая насыщенная и самая богатая на именитые бренды неделя моды — парижская. Она поставила жирную точку и подтвердила все тренды, которые мы обозначили до неё. Мы полюбим бахрому, начнём присматриваться ко всевозможным трусам и купим парочку прозрачных вещей. Дословно повторять необязательно, но направление мысли уже ясно. Кстати, парижская неделя сопровождалась парочкой прощальных эмоциональных коллекций. Ну обо всем по порядку.</p>
+                            <h3>10 проверенных средств для губ</h3>
+                            <p>Когда заходит речь о макияже губ, тема давно не сводится лишь к выбору цвета помады или блеска. Продвинутые бьюти-энтузиасты смотрят шире и ждут от средств этой категории более широкого функционала: лифтинга, способности увеличивать объем, подобно бьюти-инъекциям гиалуронки, моделировать контур или даже просто крашать полку необычной коллекционной упаковкой. </p>
                         </div>
                     </div>
                 </Link>
-                <Link href="/" className={styles.link}>
+                <Link href="/news/p4" className={styles.link}>
                     <div className={styles.card}>
                         <Image
-                            src="/sunglasses.png"
+                            src="/covers/p4.png.webp"
                             alt=""
                             className={styles.imageCard}
                             width={660}
@@ -149,7 +153,7 @@ const NewsPage = () => {
                             priority
                         />
                         <div className={styles.category}>
-                            <h3>Лайфхаки</h3>
+                            <h3>Мода</h3>
                         </div>
 
                         <div className={styles.cardText}>
@@ -175,8 +179,8 @@ const NewsPage = () => {
                                 <p>Antonio Banderas</p>
 
                             </div>
-                            <h3>Гайд по выбору очков на лето</h3>
-                            <p>Очки состоят из двух принципиальных частей: линз и оправы. Линзы преломляют свет от внешнего мира, чтобы в него было не так больно смотреть. Оправа держит линзы недалеко от глаз, потому что держать линзы руками неудобно. Очки состоят из двух принципиальных частей: линз и оправы. Линзы преломляют свет от внешнего мира, чтобы в него было не так больно смотреть. Оправа держит линзы недалеко от глаз, потому что держать линзы руками неудобно.</p>
+                            <h3>Маст-хэв в летнем гардеробе для мужчин 2024</h3>
+                            <p>Одеваться в самые жаркие месяцы года не самое приятное занятие (и уж точно не самое сухое). Но если вы правильно подберете мужскую летнюю одежду, то сможете переносить зной с высокомерием и уверенностью трехлетнего ребенка, впервые попробовавшего халапеньо.</p>
                         </div>
                     </div>
                 </Link>
@@ -269,7 +273,7 @@ const NewsPage = () => {
                         </div>
                     </div>
                 </Link>
-                <Link href="/" className={styles.link}>
+                <Link href="/" className={styles.link} style={{visibility:'hidden'}}>
                     <div className={styles.card}>
                         <Image
                             src="/sunglasses.png"
@@ -316,10 +320,10 @@ const NewsPage = () => {
             <h1 className={styles.categoryTitle}><span style={{ color: 'rgb(var(--accent-color-rgb))' }}>|</span>лайфхаки</h1>
 
             <div className={styles.box}>
-                <Link href="/" className={styles.link}>
+                <Link href="/news/p2" className={styles.link}>
                     <div className={styles.card}>
                         <Image
-                            src="/sample1.jpg"
+                            src="/covers/p2.png"
                             alt=""
                             className={styles.imageCard}
                             width={660}
@@ -327,7 +331,7 @@ const NewsPage = () => {
                             priority
                         />
                         <div className={styles.category}>
-                            <h3>Показы</h3>
+                            <h3>Лайфхаки</h3>
                         </div>
 
                         <div className={styles.cardText}>
@@ -353,8 +357,8 @@ const NewsPage = () => {
                                 <p>Antonio Banderas</p>
 
                             </div>
-                            <h3>Неделя моды в Париже 2024</h3>
-                            <p>Самая насыщенная и самая богатая на именитые бренды неделя моды — парижская. Она поставила жирную точку и подтвердила все тренды, которые мы обозначили до неё. Мы полюбим бахрому, начнём присматриваться ко всевозможным трусам и купим парочку прозрачных вещей. Дословно повторять необязательно, но направление мысли уже ясно. Кстати, парижская неделя сопровождалась парочкой прощальных эмоциональных коллекций. Ну обо всем по порядку.</p>
+                            <h3>Гайд по выбору очков на лето</h3>
+                            <p>Очки состоят из двух принципиальных частей: линз и оправы. Линзы преломляют свет от внешнего мира, чтобы в него было не так больно смотреть. Оправа держит линзы недалеко от глаз, потому что держать линзы руками неудобно. Очки состоят из двух принципиальных частей: линз и оправы. Линзы преломляют свет от внешнего мира, чтобы в него было не так больно смотреть. Оправа держит линзы недалеко от глаз, потому что держать линзы руками неудобно.</p>
                         </div>
                     </div>
                 </Link>
