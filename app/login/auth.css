@@ -1,0 +1,59 @@
+.loginBody {
+    height: 100vh;
+    background-image: url("../../public/login/login-web.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: bottom;
+}
+
+header {
+    display: flex;
+    justify-content: center;
+    padding-top: 70px;
+}
+
+@media (max-width: 600px) {
+    body {
+        background-image: url("../../public/login/login-mob.jpg");
+    }
+}
+
+.authLabel {
+    display: block;
+    position: relative;
+    margin-bottom: 5px;
+    width: fit-content;
+}
+
+.authInput {
+    display: block;
+    background-color: #FFF;
+    border: 3px solid #D3D3D3;
+    border-radius: 12px;
+    width: 350px;
+    height: 48px;
+    margin-bottom: 20px;
+}
+
+.forgotPassword {
+    position: absolute;
+    top: 4px;
+    right: -258px;
+}
+
+.authButton {
+    background: #3498DB;
+    border: none;
+    width: 350px;
+    height: 48px;
+    border-radius: 12px;
+    font-family: "Raleway", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 1.2em;
+    line-height: 100%;
+    color: #FFF;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
