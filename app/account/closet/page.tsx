@@ -2,25 +2,31 @@
 
 
 import React from "react";
-import styles from "../page.module.css";
+import styles from "./closet.module.css";
+import ItemAccount from "@/components/ItemAccount";
 
 
 export default function Closet() {
-
-  function login(formData: { get: (arg0: string) => any }) {
-    const login = formData.get("login");
-    localStorage.setItem("login", JSON.stringify(login));
-  }
+  const items = [
+    {img:"/../../public/001.jpg", title:"test"},
+    {img:"/../../public/001.jpg", title:"test"},
+    {img:"/../../public/001.jpg", title:"test"},
+    {img:"/../../public/001.jpg", title:"test"},
+    {img:"/../../public/001.jpg", title:"test"},
+  ]
 
   return (
     <>
-    <div className={styles.header}>
+      <div className={styles.header}>
         <h2>Шкаф</h2>
         <div className={styles.hiUser}>
           <h3>Привет,&nbsp;Егор</h3>
           <img src="/userAvatar.png" className={styles.userAvatar}/>
         </div>
       </div>
-      </>
+      <div className={styles.items}>
+        {items.map((item) => <ItemAccount img={item.img} title={item.title}/>)}
+      </div>
+    </>
   );
 }
