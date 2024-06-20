@@ -6,11 +6,12 @@ import styles from "./page.module.css";
 
 export default function Account() {
 
-  const Cell = ({ header, bigText, info, img }: { header?: string, bigText?: string, info?: string, img?: string }) => (
+  const Cell = ({ header, bigText, info, info1 }: { header?: string, bigText?: string, info?: string, info1?: string }) => (
     <div className={styles.cell}>
       <h6>{header}</h6>
       <span className={styles.count}>{bigText}</span>
-      <p className={styles.numberPlus}>{info}</p>
+      <div style={{display:'flex', height:'35%', alignItems:'flex-end'}}><p className={styles.numberPlusOne}>{info1}</p>
+      <p className={styles.numberPlus}>{info}</p></div>
     </div>
   );
 
@@ -46,11 +47,11 @@ export default function Account() {
 
       <div className={styles.grid}>
         <div className={styles.column}>
-          <Cell header="Одежда" bigText="200" info="+10 за последний месяц" />
-          <Cell header="Просмотры" bigText="1.2M" info="+10 за последний месяц" />
+          <Cell header="Одежда" bigText="200" info1="+10 " info=" за последний месяц" />
+          <Cell header="Просмотры" bigText="1.2M" info1="+40к " info=" за последний месяц" />
         </div>
         <div className={styles.column}>
-          <Cell header="Образы" bigText="15" info="+10 за последний месяц" />
+          <Cell header="Образы" bigText="15" info1="+1 " info=" за последний месяц" />
           <CellImg header="История образов"  />
         </div>
         <div className={`${styles.column} ${styles.large}`}>

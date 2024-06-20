@@ -59,8 +59,15 @@
 }
 
 .numberPlus {
-    position: absolute;
     bottom: 9px;
+    align-items: flex-end;
+}
+
+.numberPlusOne {
+    margin-right:  7px ;
+    color: #32CD32;
+    font-family: 'Bitter';
+    align-items: flex-end;
 }
 
 .large {
