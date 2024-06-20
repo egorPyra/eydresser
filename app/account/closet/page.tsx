@@ -8,13 +8,14 @@ import ItemAccount from "@/components/ItemAccount";
 
 export default function Closet() {
   const items = [
-    {img:"/../../public/001.jpg", title:"test"},
-    {img:"/../../public/001.jpg", title:"test"},
-    {img:"/../../public/001.jpg", title:"test"},
-    {img:"/../../public/001.jpg", title:"test"},
-    {img:"/../../public/001.jpg", title:"test"},
+    {img:"/closet/closet1.jpg", title:"test"},
+    {img:"/closet/closet2.jpg", title:"test"},
+    {img:"/closet/closet3.jpg", title:"test"},
+    {img:"/closet/closet4.jpg", title:"test"},
+    {img:"/closet/closet5.jpg", title:"test"},
+    {img:"/closet/closet6.jpg", title:"test"},
   ]
-
+  
   return (
     <>
       <div className={styles.header}>
