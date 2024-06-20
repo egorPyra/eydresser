@@ -24,7 +24,7 @@ export default function Features() {
                 </div>
                 <div className={styles.card}>
                     <Image
-                        src="/sample.jpg"
+                        src="/combine.gif"
                         alt="eydresser Logo"
                         className={styles.logo}
                         width={350}
