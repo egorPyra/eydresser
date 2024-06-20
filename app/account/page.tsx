@@ -6,39 +6,19 @@ import styles from "./page.module.css";
 
 export default function Account() {
 
-  const Cell1 = () => (
+  const Cell = ({header, bigText, info}: {header?: string, bigText?: string, info?: string}) => (
     <div className={styles.cell}>
-      <h2>Заголовок 1</h2>
-      <p>Содержимое ячейки 1</p>
-    </div>
-  );
-
-  const Cell2 = () => (
-    <div className={styles.cell}>
-      <h2>Заголовок 2</h2>
-      <p>Содержимое ячейки 2</p>
-    </div>
-  );
-
-  const Cell3 = () => (
-    <div className={styles.cell}>
-      <h2>Заголовок 1</h2>
-      <p>Содержимое ячейки 1</p>
-    </div>
-  );
-
-  const Cell4 = () => (
-    <div className={styles.cell}>
-      <h2>Заголовок 2</h2>
-      <p>Содержимое ячейки 2</p>
+      <h6>{header}</h6>
+      <h1>{bigText}</h1>
+      <p>{info}</p>
     </div>
   );
 
   //большая
-  const Cell5 = () => (
+  const CellBig = ({header, info}: {header: string, info: string}) => (
     <div className={`${styles.cell} ${styles.large}`}>
-      <h2>Заголовок 3</h2>
-      <p>Содержимое ячейки 3, объединенной</p>
+      <h6>{header}</h6>
+      <p>{info}</p>
     </div>
   );
 
@@ -55,15 +35,15 @@ export default function Account() {
 
       <div className={styles.grid}>
         <div className={styles.column}>
-            <Cell1 />
-            <Cell2 />
+            <Cell header="Заголовок 1" bigText="200" info="Содержимое ячейки 1, объединенной"/>
+            <Cell header="Заголовок 2" bigText="1.2M" info="Содержимое ячейки 2, объединенной"/>
         </div>
         <div className={styles.column}>
-            <Cell3 />
-            <Cell4 />
+            <Cell header="Заголовок 3" bigText="15" info="Содержимое ячейки 3, объединенной"/>
+            <Cell header="Заголовок 4" info="Содержимое ячейки 4, объединенной"/>
         </div>
         <div className={`${styles.column} ${styles.large}`}>
-            <Cell3 />
+            <CellBig header="Заголовок 4" info="Содержимое ячейки 4, объединенной"/>
         </div>
     </div>
     </>

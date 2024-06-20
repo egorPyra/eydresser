@@ -22,13 +22,13 @@
 
 .cell {
     padding: 20px;
-    border: 1px solid #ccc;
     margin-top: 1rem;
     grid-row: 1fr;
-    outline: solid;
+    border-radius: 12px;
+    background-color: #F5F5F5;
 }
 
 .large {
     grid-row: 2fr; 
-    height: 100px;
+    height: 90%;
 }
