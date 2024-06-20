@@ -16,7 +16,7 @@ export default function Features() {
                         className={styles.logo}
                         width={350}
                         height={350}
-                        priority
+                        unoptimized
                     />
                     <div className={styles.cardTextBox}>
                     <h3>Управляй гардеробом</h3>
@@ -29,7 +29,7 @@ export default function Features() {
                         className={styles.logo}
                         width={350}
                         height={350}
-                        priority
+                        unoptimized
                     />
                     <div className={styles.cardTextBox}>
                     <h3>Создавай образы</h3>
@@ -42,7 +42,7 @@ export default function Features() {
                         className={styles.logo}
                         width={350}
                         height={350}
-                        priority
+                        unoptimized
                     />
                     <div className={styles.cardTextBox}>
                     <h3>Ищи вдохновение</h3>

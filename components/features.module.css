@@ -8,7 +8,7 @@
 
 .cardsBox {
     display: flex;
-    justify-content: flex-start; 
+    justify-content: space-evenly; 
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
@@ -28,7 +28,7 @@
 }
 
 .card img {
-    width: 100%;
+    /* width: 100%; */
     object-fit: contain;
 }
 
