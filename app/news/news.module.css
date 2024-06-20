@@ -14,6 +14,15 @@
     margin-top: 3rem;
 }
 
+.mainBox b {
+    font-weight: 400;
+}
+
+.meta i {
+    opacity: 0;
+    color: red;
+}
+
 .mainBox img {
     width: 100%;
     margin-top: 3rem;
@@ -36,6 +45,15 @@
     text-decoration: underline;
 }
 
+.mainBox blockquote {
+    position: relative;
+    font-style: italic;
+    font-family: "Cormorant Garamond";
+    font-size: 2.2vw;
+    line-height: 1.6;
+    padding: 5rem;
+    color: #000000;
+}
 
 .box {
     width: 100%;
@@ -69,14 +87,14 @@
     border-radius: 20px;
 }
 
-.cardText { 
+.cardText {
     padding: 0 5%;
     width: 100%;
     height: 11.3rem;
     white-space: wrap;
     overflow: hidden;
     text-overflow: ellipsis;
-  
+
 }
 
 .cardText h3 {
@@ -133,8 +151,104 @@
 }
 
 .tgr img {
-    float: right; 
+    float: right;
     max-width: 20%;
-    margin: 0 15px 15px 0; 
+    margin: 0 15px 15px 0;
     mix-blend-mode: multiply;
+}
+
+@media (max-width: 1000px) {
+    .mainBox {
+        margin-top: 3rem;
+        padding-left: 4rem;
+        padding-right: 4rem;
+        padding-bottom: 3rem;
+    }
+
+    .mainBox p {
+        margin-top: 0.75rem;
+    }
+
+    .mainBox h3 {
+        margin-top: 2rem;
+    }
+
+    .mainBox b {
+        font-weight: 400;
+    }
+
+    .mainBox img {
+        width: 100%;
+        margin-top: 2.5rem;
+    }
+
+    .src {
+        position: static;
+        left: 0;
+        opacity: 0.7;
+        margin-top: 1rem;
+    }
+
+    .mainBox a {
+        transition: all 0.7s ease;
+    }
+
+    .mainBox a:hover {
+        opacity: 0.8;
+        text-decoration: underline;
+    }
+
+    .mainBox blockquote {
+        font-size: 3vw; /* Регулируем размер шрифта для планшетов */
+        padding: 3rem; /* Уменьшаем отступы */
+    }
+}
+
+
+@media (max-width: 768px) {
+    .mainBox {
+        margin-top: 2rem;
+        padding-left: 2rem;
+        padding-right: 2rem;
+        padding-bottom: 2rem;
+    }
+
+    .mainBox p {
+        margin-top: 0.5rem;
+    }
+
+    .mainBox h3 {
+        margin-top: 1.5rem;
+    }
+
+    .mainBox b {
+        font-weight: 400;
+    }
+
+
+    .mainBox img {
+        width: 100%;
+        margin-top: 2rem;
+    }
+
+    .src {
+        position: static;
+        left: 0;
+        opacity: 0.8;
+        margin-top: 1rem;
+    }
+
+    .mainBox a {
+        transition: all 0.7s ease;
+    }
+
+    .mainBox a:hover {
+        opacity: 0.8;
+        text-decoration: underline;
+    }
+
+    .mainBox blockquote {
+        font-size: 4.5vw; /* Увеличиваем размер шрифта для мобильных */
+        padding: 2rem; /* Уменьшаем отступы */
+    }
 }

@@ -15,8 +15,8 @@ export default function NewsArticle() {
             <NewsHat
                 imageSrc="/covers/p2.png"
                 text="Гайд по выбору очков на лето"
-                author="Steeve Jobs"
-                timeText="12 - 15 минут"
+                author="Ирина Лобанова"
+                timeText="7 - 13 минут"
             />
 
             <div className={styles.mainBox}>
@@ -65,58 +65,23 @@ export default function NewsArticle() {
                     <img src="https://rskrf.ru/upload/medialibrary/1d7/1d799bdc046abc5e2b0533ff5084f32c.png" />
                 </div>
 
+
+                <p>Роскачество провело эксперимент и сравнило солнцезащитные очки и профессиональные очки для медицинских специалистов, работающих с ультрафиолетовыми лампами.</p>
+                <img src="https://rskrf.ru/upload/medialibrary/bb2/bb29c2bf8c0013d4f97ed70bb3cc2ebb.jpg" />
+
+                <p>Профессиональные очки заблокировали излучение полностью, обычные – отчасти. </p>
+                <p>Если вы периодически совершаете покупки в оптике, например, обновляете запасы жидкости для линз, то можно попросить консультанта «просветить» ваши очки, купленные на рынке или в переходе.</p>
+
                 <span className={styles.src}>Источник: <a href="https://rskrf.ru/tips/eksperty-obyasnyayut/kak-vybrat-solntsezashchitnye-ochki/">Российская система качества (Роскачество)</a></span>
 
             </div>
 
             <h2 className={styles.next}>Читать далее</h2>
             <div className={styles.box}>
-                <Link href="/news/p1" className={styles.link}>
+            <Link href="/news/p6" className={styles.link}>
                     <div className={styles.card}>
                         <Image
-                            src="/sample1.jpg"
-                            alt=""
-                            className={styles.imageCard}
-                            width={660}
-                            height={250}
-                            priority
-                        />
-                        <div className={styles.category}>
-                            <h3>Показы</h3>
-                        </div>
-
-                        <div className={styles.cardText}>
-                            <div className={styles.meta}>
-                                <Image
-                                    src="/watch.svg"
-                                    alt=""
-                                    className={styles.watch}
-                                    width={20}
-                                    height={20}
-                                    priority
-                                />
-                                <p>15-20 минут</p>
-                                <span style={{ margin: '0 20px' }}>|</span>
-                                <Image
-                                    src="/Blank-Avatar.png"
-                                    alt=""
-                                    className={styles.watch}
-                                    width={20}
-                                    height={20}
-                                    priority
-                                />
-                                <p>Antonio Banderas</p>
-
-                            </div>
-                            <h3>Неделя моды в Париже 2024</h3>
-                            <p>Самая насыщенная и самая богатая на именитые бренды неделя моды — парижская. Она поставила жирную точку и подтвердила все тренды, которые мы обозначили до неё. Мы полюбим бахрому, начнём присматриваться ко всевозможным трусам и купим парочку прозрачных вещей. Дословно повторять необязательно, но направление мысли уже ясно. Кстати, парижская неделя сопровождалась парочкой прощальных эмоциональных коллекций. Ну обо всем по порядку.</p>
-                        </div>
-                    </div>
-                </Link>
-                <Link href="/" className={styles.link}>
-                    <div className={styles.card}>
-                        <Image
-                            src="/sunglasses.png"
+                            src="/covers/p6.jpg"
                             alt=""
                             className={styles.imageCard}
                             width={660}
@@ -137,21 +102,63 @@ export default function NewsArticle() {
                                     height={20}
                                     priority
                                 />
-                                <p>15-20 минут</p>
+                                <p>5-10 минут</p>
                                 <span style={{ margin: '0 20px' }}>|</span>
                                 <Image
-                                    src="/Blank-Avatar.png"
+                                    src="/avatar.svg"
                                     alt=""
                                     className={styles.watch}
                                     width={20}
                                     height={20}
                                     priority
                                 />
-                                <p>Antonio Banderas</p>
+                                <p>Омри Гиллат</p>
 
                             </div>
-                            <h3>Гайд по выбору очков на лето</h3>
-                            <p>Очки состоят из двух принципиальных частей: линз и оправы. Линзы преломляют свет от внешнего мира, чтобы в него было не так больно смотреть. Оправа держит линзы недалеко от глаз, потому что держать линзы руками неудобно. Очки состоят из двух принципиальных частей: линз и оправы. Линзы преломляют свет от внешнего мира, чтобы в него было не так больно смотреть. Оправа держит линзы недалеко от глаз, потому что держать линзы руками неудобно.</p>
+                            <h3>12 лайфхаков по уходу за обувью</h3>
+                            <p>Обувь может рассказать о своем владельце до 90 % информации — к такому выводу пришел исследователь Омри Гиллат. Например, неновая, но ухоженная обувь говорит об ответственности и порядочности. Вспыльчивые люди предпочитают узкие полусапожки. В общем, человека часто оценивают по его обуви, поэтому ее необходимо держать в порядке.</p>
+                        </div>
+                    </div>
+                </Link>
+                <Link href="/news/p3" className={styles.link}>
+                    <div className={styles.card}>
+                        <Image
+                            src="/covers/p3.webp"
+                            alt=""
+                            className={styles.imageCard}
+                            width={660}
+                            height={250}
+                            priority
+                        />
+                        <div className={styles.category}>
+                            <h3>Здоровье</h3>
+                        </div>
+
+                        <div className={styles.cardText}>
+                            <div className={styles.meta}>
+                                <Image
+                                    src="/watch.svg"
+                                    alt=""
+                                    className={styles.watch}
+                                    width={20}
+                                    height={20}
+                                    priority
+                                />
+                                <p>15-20 минут</p>
+                                <span style={{ margin: '0 20px' }}>|</span>
+                                <Image
+                                    src="/avatar.svg"
+                                    alt=""
+                                    className={styles.watch}
+                                    width={20}
+                                    height={20}
+                                    priority
+                                />
+                                <p>Юлия Самошкина</p>
+
+                            </div>
+                            <h3>10 проверенных средств для губ</h3>
+                            <p>Когда заходит речь о макияже губ, тема давно не сводится лишь к выбору цвета помады или блеска. Продвинутые бьюти-энтузиасты смотрят шире и ждут от средств этой категории более широкого функционала: лифтинга, способности увеличивать объем, подобно бьюти-инъекциям гиалуронки, моделировать контур или даже просто крашать полку необычной коллекционной упаковкой. </p>
                         </div>
                     </div>
                 </Link>

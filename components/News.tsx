@@ -37,14 +37,14 @@ export default function News() {
                                 <p>15-20 минут</p>
                                 <span style={{ margin: '0 20px' }}>|</span>
                                 <Image
-                                    src="/Blank-Avatar.png"
+                                    src="/avatar.svg"
                                     alt=""
                                     className={styles.watch}
                                     width={20}
                                     height={20}
                                     priority
                                 />
-                                <p>Antonio Banderas</p>
+                                <p>Татьяна Тимофеева</p>
 
                             </div>
                             <h3>Неделя моды в Париже 2024</h3>
@@ -79,7 +79,7 @@ export default function News() {
                                 <p>15-20 минут</p>
                                 <span style={{ margin: '0 20px' }}>|</span>
                                 <Image
-                                    src="/Blank-Avatar.png"
+                                    src="/avatar.svg"
                                     alt=""
                                     className={styles.watch}
                                     width={20}

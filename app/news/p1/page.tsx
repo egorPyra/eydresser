@@ -15,8 +15,8 @@ export default function NewsArticle() {
             <NewsHat
                 imageSrc="/covers/p1.jpg"
                 text="Неделя моды в Париже 2024"
-                author="Steeve Jobs"
-                timeText="12 - 15 минут"
+                author="Татьяна Тимофеева"
+                timeText="15 - 20 минут"
             />
 
             <div className={styles.mainBox}>
@@ -58,10 +58,52 @@ export default function NewsArticle() {
 
             <h2 className={styles.next}>Читать далее</h2>
             <div className={styles.box}>
-                <Link href="/news/p1" className={styles.link}>
+            <Link href="/news/p4" className={styles.link}>
                     <div className={styles.card}>
                         <Image
-                            src="/sample1.jpg"
+                            src="/covers/p4.png.webp"
+                            alt=""
+                            className={styles.imageCard}
+                            width={660}
+                            height={250}
+                            priority
+                        />
+                        <div className={styles.category}>
+                            <h3>Мода</h3>
+                        </div>
+
+                        <div className={styles.cardText}>
+                            <div className={styles.meta}>
+                                <Image
+                                    src="/watch.svg"
+                                    alt=""
+                                    className={styles.watch}
+                                    width={20}
+                                    height={20}
+                                    priority
+                                />
+                                <p>15-20 минут</p>
+                                <span style={{ margin: '0 20px' }}>|</span>
+                                <Image
+                                    src="/avatar.svg"
+                                    alt=""
+                                    className={styles.watch}
+                                    width={20}
+                                    height={20}
+                                    priority
+                                />
+                                <p>Antonio Banderas</p>
+
+                            </div>
+                            <h3>Маст-хэв в летнем гардеробе для мужчин 2024</h3>
+                            <p>Одеваться в самые жаркие месяцы года не самое приятное занятие (и уж точно не самое сухое). Но если вы правильно подберете мужскую летнюю одежду, то сможете переносить зной с высокомерием и уверенностью трехлетнего ребенка, впервые попробовавшего халапеньо.</p>
+                        </div>
+                    </div>
+                </Link>
+                <Link href="/news/p5" className={styles.link}>
+                    <div className={styles.card}>
+                        <Image
+                            src="/covers/p5.jpg"
                             alt=""
                             className={styles.imageCard}
                             width={660}
@@ -85,60 +127,18 @@ export default function NewsArticle() {
                                 <p>15-20 минут</p>
                                 <span style={{ margin: '0 20px' }}>|</span>
                                 <Image
-                                    src="/Blank-Avatar.png"
+                                    src="/avatar.svg"
                                     alt=""
                                     className={styles.watch}
                                     width={20}
                                     height={20}
                                     priority
                                 />
-                                <p>Antonio Banderas</p>
+                                <p>Эдуард Юсупов</p>
 
                             </div>
-                            <h3>Неделя моды в Париже 2024</h3>
-                            <p>Самая насыщенная и самая богатая на именитые бренды неделя моды — парижская. Она поставила жирную точку и подтвердила все тренды, которые мы обозначили до неё. Мы полюбим бахрому, начнём присматриваться ко всевозможным трусам и купим парочку прозрачных вещей. Дословно повторять необязательно, но направление мысли уже ясно. Кстати, парижская неделя сопровождалась парочкой прощальных эмоциональных коллекций. Ну обо всем по порядку.</p>
-                        </div>
-                    </div>
-                </Link>
-                <Link href="/" className={styles.link}>
-                    <div className={styles.card}>
-                        <Image
-                            src="/sunglasses.png"
-                            alt=""
-                            className={styles.imageCard}
-                            width={660}
-                            height={250}
-                            priority
-                        />
-                        <div className={styles.category}>
-                            <h3>Лайфхаки</h3>
-                        </div>
-
-                        <div className={styles.cardText}>
-                            <div className={styles.meta}>
-                                <Image
-                                    src="/watch.svg"
-                                    alt=""
-                                    className={styles.watch}
-                                    width={20}
-                                    height={20}
-                                    priority
-                                />
-                                <p>15-20 минут</p>
-                                <span style={{ margin: '0 20px' }}>|</span>
-                                <Image
-                                    src="/Blank-Avatar.png"
-                                    alt=""
-                                    className={styles.watch}
-                                    width={20}
-                                    height={20}
-                                    priority
-                                />
-                                <p>Antonio Banderas</p>
-
-                            </div>
-                            <h3>Гайд по выбору очков на лето</h3>
-                            <p>Очки состоят из двух принципиальных частей: линз и оправы. Линзы преломляют свет от внешнего мира, чтобы в него было не так больно смотреть. Оправа держит линзы недалеко от глаз, потому что держать линзы руками неудобно. Очки состоят из двух принципиальных частей: линз и оправы. Линзы преломляют свет от внешнего мира, чтобы в него было не так больно смотреть. Оправа держит линзы недалеко от глаз, потому что держать линзы руками неудобно.</p>
+                            <h3><b>Каким будет Met Gala в 2024 году:</b> все, что нужно знать о бале</h3>
+                            <p>Met Gala — одно из самых громких событий в мире моды. Это благотворительный бал, который посещают мировые звезды и именитые дизайнеры. <i style={{ opacity: '0' }}> Главная особенность мероприятия — ежегодно меняющийся дресс-код, которому должны соответствовать наряды всех гостей. Самая насыщенная и самая богатая на именитые бренды неделя моды — парижская. Она поставила жирную точку и подтвердила все тренды, которые мы обозначили до неё. rhfdbdnfurbksbrbdddd</i></p>
                         </div>
                     </div>
                 </Link>
