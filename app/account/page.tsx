@@ -16,8 +16,8 @@ export default function Account() {
   }
 
   return (
-    <body>
+    <>
        Главная страница 
-    </body>
+    </>
   );
 }
