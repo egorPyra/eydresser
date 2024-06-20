@@ -1,10 +1,19 @@
 'use client'
 
+import React from "react";
+import styles from "../page.module.css";
+
 export default function Liked() {
 
   return (
     <div>
-      <h1>понравилось</h1>
+      <div className={styles.header}>
+        <h2>Понравилось</h2>
+        <div className={styles.hiUser}>
+          <h3>Привет,&nbsp;Егор</h3>
+          <img src="/userAvatar.png" className={styles.userAvatar}/>
+        </div>
+      </div>
     </div>
   );
 }

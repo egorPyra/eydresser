@@ -1,0 +1,9 @@
+.container {
+    display: flex;
+    height: 100vh; /* Ensure full viewport height */
+  }
+  
+  .main {
+    flex: 1; /* Allow main content to take remaining space */
+  }
+  
