@@ -1,7 +1,8 @@
+'use client'
+
 import React from 'react';
-import Link from 'next/link';
 import styles from './Hero.module.css';
-import Image from 'next/image';
+import ThreeDModel from './ThreeDModel'; 
 
 export default function Hero() {
 
@@ -13,14 +14,7 @@ export default function Hero() {
                 <button className={styles.button}>Начать</button>
             </div>
             <div className={styles.imageContainer}>
-            <Image
-              src="/hero.png"
-              alt="eydresser Logo"
-              className={styles.logo}
-              width={310}
-              height={800}
-              priority
-            />
+            <ThreeDModel />
             </div>
         </div>
     );

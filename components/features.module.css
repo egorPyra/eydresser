@@ -1,8 +1,6 @@
-
 .box {
     margin-top: 5rem;
 }
-
 
 .title {
     text-align: center;
@@ -10,17 +8,23 @@
 
 .cardsBox {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start; 
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 1rem;
+    gap: 1rem; 
+    scroll-padding-left: 1rem; 
 }
 
 .card {
-    flex: 1;
-    max-width: 25rem;
+    flex: 0 0 auto;
+    width: 25rem;
     height: 30rem;
     background-color: rgb(var(--background-second-rgb));
-    margin-right: 1rem;
     padding: 2.2rem;
     border-radius: var(--border-radius);
+    scroll-snap-align: center;
 }
 
 .card img {
@@ -28,11 +32,53 @@
     object-fit: contain;
 }
 
-.card:last-child {
-    margin-right: 0;
-}
-
-
 .cardTextBox h3 {
     margin: 3rem 0;
+}
+
+/* Планшеты (до 1000 пикселей) */
+@media (max-width: 1000px) {
+    .box {
+        margin-top: 3rem;
+    }
+
+    .cardsBox {
+        padding-bottom: 2rem;
+        scroll-padding-left: 2rem; /* Увеличиваем padding слева для планшетов */
+    }
+
+    .card {
+        width: 20rem;
+        height: auto; 
+    }
+
+    .cardTextBox h3 {
+        margin: 2rem 0;
+    }
+}
+
+/* Мобильные устройства (до 768 пикселей) */
+@media (max-width: 768px) {
+    .box {
+        margin-top: 2rem;
+    }
+
+    .title {
+        font-size: 1.5rem; 
+    }
+
+    .cardsBox {
+        padding-bottom: 1.5rem;
+        scroll-padding-left: 1.5rem; 
+    }
+
+    .card {
+        width: 80%;
+        padding: 1.5rem;
+    }
+
+    .cardTextBox h3 {
+        margin: 1.5rem 0;
+        font-size: 1.2rem; 
+    }
 }

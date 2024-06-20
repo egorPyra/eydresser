@@ -54,3 +54,20 @@
     filter: brightness(80%);
   }
   
+
+  @media (max-width: 768px) {
+    .headerContainer {
+      width: 90%;
+        justify-content: space-between; 
+    }
+    
+    .logo {
+        order: 2; 
+        text-align: right;
+        margin-left: 0; 
+    }
+
+    .button, .buttonAccent {
+        order: 1; 
+    }
+}

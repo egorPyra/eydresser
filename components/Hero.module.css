@@ -12,10 +12,10 @@
     flex: 1; 
   }
   
-  .imageContainer img {
+  .imageContainer  {
     max-width: 100%;
-    height: auto;
-    mix-blend-mode: multiply;
+    height: 800px;
+    /* border: 1px black solid; */
   }
   
 
