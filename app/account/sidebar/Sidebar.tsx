@@ -28,7 +28,7 @@ export default function Sidebar() {
     return (
         <div className={styles.sidebar}>
             <Link href={"/"}>
-                <Image src={'logo.svg'} width={100} height={60} alt="logo" priority/>
+                <Image src={'/logo.svg'} width={100} height={60} alt="logo" priority/>
             </Link>
 
             <ul className={styles.list}>
