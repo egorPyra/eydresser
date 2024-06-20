@@ -3,8 +3,16 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 15vw;
+    width: 20vw;
     height: 20vw;
     background-color: #F5F5F5;
     border-radius: 15px;
+}
+
+.imgWrapper {
+    width: 80%;
+    height: 80%;
+    position: relative;
+    border-radius: 15px;
+    overflow: hidden;
 }
