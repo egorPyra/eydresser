@@ -1,3 +1,4 @@
+
 .header {
     display: flex;
     justify-content: space-between;
@@ -111,4 +112,29 @@
     /* border: 1px solid #ddd; */
     padding: 8px;
     text-align: left;
+}
+
+
+@media (max-width: 768px) {
+    .grid {
+        grid-template-columns: 1fr; /* Один столбец на мобильных устройствах */
+    }
+
+    .cell, .cellImg {
+        min-width: auto; /* Адаптивная ширина ячеек */
+    }
+
+    .gradus {
+        flex-direction: column; /* Расположение элементов в колонку */
+        align-items: flex-end; /* Выравнивание элементов в конце */
+        margin-top: 0; /* Сброс отступа */
+    }
+
+    .temperature {
+        font-size: 1.5rem; /* Уменьшенный размер текста */
+    }
+
+    .table {
+        margin-top: 10px; /* Отступ сверху для таблицы */
+    }
 }
