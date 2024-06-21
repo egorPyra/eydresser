@@ -8,7 +8,7 @@ interface StatusBarProps {
     duration?: number;
 }
 
-export default function StatusBar({ message, duration = 3000 }: StatusBarProps) {
+export default function StatusBar({ message, duration = 2000 }: StatusBarProps) {
     const [visible, setVisible] = useState(true);
 
     useEffect(() => {
