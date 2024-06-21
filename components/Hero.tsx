@@ -2,7 +2,7 @@
 
 import React from 'react';
 import styles from './Hero.module.css';
-import ThreeDModel from './ThreeDModel'; 
+import ThreeDModel from './ThreeDModel';
 
 export default function Hero() {
 
@@ -14,7 +14,7 @@ export default function Hero() {
                 <button className={styles.button}>Начать</button>
             </div>
             <div className={styles.imageContainer}>
-            <ThreeDModel />
+                <ThreeDModel />
             </div>
         </div>
     );

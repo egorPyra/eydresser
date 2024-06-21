@@ -34,3 +34,11 @@
     height: 2.5rem;
     margin: 20px 0;
   }
+
+
+  @media (max-width: 768px) {
+    .imageContainer  {
+      display: none;
+    }
+    
+  }

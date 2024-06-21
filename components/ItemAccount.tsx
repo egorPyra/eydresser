@@ -12,7 +12,7 @@ export default function ItemAccount({img, title}: {img: string, title: string}) 
         <div className={styles.imgWrapper}>
             <Image src={img} layout="fill" objectPosition="contain" alt="item image"/>
         </div>
-        <p>{title}</p>
+        <h3>{title}</h3>
     </div>
   );
 }
