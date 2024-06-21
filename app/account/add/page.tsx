@@ -36,13 +36,14 @@ export default function Closet() {
         if (result) {
           setImages((prevImages) => [
             ...prevImages,
-            { src: result as string, alt: `uploaded ${prevImages.length}` }
+            { key: prevImages.length, src: result as string, alt: `uploaded ${prevImages.length}` }
           ]);
         }
       };
       reader.readAsDataURL(file);
     }
   };
+
 
   const handleChangeRotation = (e: React.ChangeEvent<HTMLInputElement>) => {
     const angle = parseInt(e.target.value);
@@ -56,23 +57,25 @@ export default function Closet() {
   };
 
   const handleSaveData = () => {
-    // Собираем данные для сохранения
-    const dataToSave: ImageData[] = images.map((image, index) => ({
+    const dataToSave = images.map((image, index) => ({
       id: index + 1,
       src: image.src,
       alt: image.alt,
-      position: { x: 0, y: 0 }, // Замените на реальные данные позиции
-      rotationAngle: rotateAngle // Используем текущий угол поворота
+      position: { x: 0, y: 0 },
+      rotationAngle: rotateAngle
     }));
-  
-    // Преобразуем данные в JSON
-    const jsonData = JSON.stringify(dataToSave, null, 2);
-  
-    // Сохраняем JSON в localStorage
-    localStorage.setItem("savedData", jsonData);
-    alert("Данные сохранены!");
+
+    try {
+      const jsonData = JSON.stringify(dataToSave, null, 2);
+      localStorage.setItem("savedData", jsonData);
+      alert("Данные сохранены!");
+    } catch (error) {
+      console.error("Error saving data:", error);
+      alert("Произошла ошибка при сохранении данных.");
+    }
   };
-  
+
+
 
   return (
     <div>
@@ -85,10 +88,15 @@ export default function Closet() {
       </div>
       <div className="content">
         <div className="greyZone">
-          {images.map((image, index) => (
-            <DraggableImage key={index} src={image.src} alt={image.alt} rotateAngle={rotateAngle}  />
+          {images.map((image) => (
+            <DraggableImage
+              src={image.src}
+              alt={image.alt}
+              rotateAngle={rotateAngle}
+            />
           ))}
         </div>
+
         <div className="tools">
           <div className="addFromDevice" onClick={handleClick}>
             <p>Добавить с компьютера</p>
