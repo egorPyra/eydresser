@@ -118,6 +118,7 @@ export default function Closet() {
               style={{ display: 'none' }}
             />
           </div>
+          <p> <br/> Для перемещения удерживайте 🔘</p>
           <div className="rotate">
             <h3>Поворот</h3>
             <input

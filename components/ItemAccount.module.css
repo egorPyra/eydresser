@@ -10,10 +10,16 @@
     padding: 1rem;
 }
 
+.item {
+    min-width: 200px;
+    min-height: 200px;
+}
+
 .imgWrapper {
     width: 80%;
     height: 80%;
     position: relative;
+    object-fit: contain;
     border-radius: var(--border-radius);
     overflow: hidden;
     margin: 0 auto;

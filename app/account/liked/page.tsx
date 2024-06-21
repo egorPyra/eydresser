@@ -6,12 +6,12 @@ import ItemAccount from "@/components/ItemAccount";
 
 export default function Liked() {
   const items = [
-    {img:"/closet/closet1.jpg", title:"test"},
-    {img:"/closet/closet2.jpg", title:"test"},
-    {img:"/closet/closet3.jpg", title:"test"},
-    {img:"/closet/closet4.jpg", title:"test"},
-    {img:"/closet/closet5.jpg", title:"test"},
-    {img:"/closet/closet6.jpg", title:"test"},
+    {img:"/closet/ 7.avif", title:"брюки"},
+    {img:"/closet/ 9.avif", title:"рубашка"},
+    {img:"/closet/ 6.avif", title:"кофта"},
+    {img:"/closet/ 2.avif", title:"куртка"},
+    {img:"/closet/ 8.avif", title:"джинсовка"},
+    {img:"/closet/ 5.avif", title:"сумка"},
   ]
 
 
