@@ -30,7 +30,8 @@
     border-radius: 12px;
     background-color: #F5F5F5;
     height: 30%;
-    min-width: 250px
+    min-width: 250px;
+    min-height: 160px;
 }
 
 .cellImg {
@@ -136,5 +137,53 @@
 
     .table {
         margin-top: 10px; /* Отступ сверху для таблицы */
+    }
+}
+
+@media (max-width: 968px) {
+    .grid {
+        grid-template-columns: 1fr; /* Один столбец на мобильных устройствах */
+        gap: 1rem;
+    }
+
+    .cell, .cellImg {
+        min-width: auto; /* Адаптивная ширина ячеек */
+        padding: 10px; /* Уменьшить отступы для мобильных устройств */
+    }
+
+    .gradus {
+        flex-direction: column; /* Расположение элементов в колонку */
+        align-items: flex-end; /* Выравнивание элементов в конце */
+        margin-top: 0; /* Сброс отступа */
+    }
+
+    .temperature {
+        font-size: 1.5rem; /* Уменьшенный размер текста */
+    }
+
+    .table {
+        margin-top: 10px; /* Отступ сверху для таблицы */
+    }
+
+    .header {
+        flex-direction: column; /* Столбец на мобильных устройствах */
+        align-items: center; /* Центрировать элементы */
+        margin-top: 2rem; /* Уменьшить отступ сверху */
+    }
+
+    .hiUser {
+        margin-top: 1rem; /* Добавить отступ сверху */
+    }
+
+    .large {
+        height: auto; /* Адаптивная высота для больших ячеек */
+    }
+
+    .numberPlus, .numberPlusOne {
+        font-size: 0.9rem; /* Уменьшить размер текста */
+    }
+
+    .count {
+        font-size: 2rem; /* Уменьшить размер текста */
     }
 }

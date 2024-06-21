@@ -13,7 +13,7 @@ header {
 }
 
 @media (max-width: 600px) {
-    body {
+    .loginBody {
         background-image: url("../../public/login/login-mob.jpg");
     }
 }

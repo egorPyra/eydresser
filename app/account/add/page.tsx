@@ -1,21 +1,19 @@
 'use client'
 
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import styles from "../closet/closet.module.css";
 import "./add.css";
 import Image from "next/image";
 import DraggableImage from "@/components/DraggableImage";
+import gsap from "gsap";
 
-interface ImageItem {
-  src: string;
-  alt: string;
-}
+
 
 interface ImageData {
-  id: number;
+  id?: number;
   src: string;
   alt: string;
-  position: { x: number; y: number };
+  position?: { x: number; y: number };
   rotationAngle: number;
 }
 
@@ -23,7 +21,7 @@ let imageData: ImageData[] = [];
 
 
 export default function Closet() {
-  const [images, setImages] = useState<ImageItem[]>([]);
+  const [images, setImages] = useState<ImageData[]>([]);
   const [rotateAngle, setRotateAngle] = useState(0);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -36,14 +34,25 @@ export default function Closet() {
         if (result) {
           setImages((prevImages) => [
             ...prevImages,
-            { key: prevImages.length, src: result as string, alt: `uploaded ${prevImages.length}` }
+            { key: prevImages.length, src: result as string, alt: `uploaded ${prevImages.length}`, rotationAngle: 0 }
           ]);
         }
       };
       reader.readAsDataURL(file);
+      console.log(file)
     }
   };
 
+  console.log(fileInputRef);
+
+  useEffect(() => {
+    if (fileInputRef.current) {
+      fileInputRef.current.style.transform = `rotate(${rotateAngle}deg)`;
+    }
+    console.log(rotateAngle);
+  }, [rotateAngle]);
+  
+  
 
   const handleChangeRotation = (e: React.ChangeEvent<HTMLInputElement>) => {
     const angle = parseInt(e.target.value);

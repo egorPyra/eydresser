@@ -6,13 +6,11 @@
     flex-wrap: wrap;
     align-content: flex-start;
     align-items: center;
-    /* outline: solid; */
 }
 
 .list {
     list-style: none;
     width: 17rem;
-    ;
 }
 
 .item {
@@ -21,7 +19,6 @@
     padding: 0.5rem 2rem;
     margin: 1rem auto;
 }
-
 
 .item a {
     display: flex;
@@ -79,4 +76,55 @@
 .hiddenItem img {
     margin-right: 15px;
     margin-bottom: 2px;
+}
+
+.menuButton {
+    display: none;
+}
+
+/* Media queries for mobile view */
+@media (max-width: 768px) {
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: white;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease-in-out;
+        z-index: 1000;
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+    }
+
+    .menuButton {
+        display: block;
+        position: fixed;
+        top: 1rem;
+        left: 1rem;
+        z-index: 1100;
+        background: none;
+        border: none;
+        cursor: pointer;
+        width: 30px;
+        height: 50px;
+    }
+
+    .list {
+        padding: 2rem;
+        width: 100%;
+    }
+
+    .item, .activeItem, .hiddenItem {
+        width: 100%;
+        padding: 1rem;
+        text-align: left;
+    }
+
+    .item a, .activeItem a, .hiddenItem a {
+        justify-content: flex-start;
+    }
 }
