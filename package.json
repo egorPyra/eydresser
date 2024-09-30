@@ -9,12 +9,17 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@prisma/client": "^5.20.0",
     "@react-three/drei": "^9.107.0",
     "@react-three/fiber": "^8.16.8",
+    "@types/bcrypt": "^5.0.2",
     "@types/gsap": "^3.0.0",
     "axios": "^1.7.2",
+    "bcrypt": "^5.1.1",
     "gsap": "^3.12.5",
-    "next": "14.2.3",
+    "next": "^14.2.13",
+    "next-auth": "^4.24.7",
+    "prisma": "^5.20.0",
     "react": "^18",
     "react-dom": "^18",
     "react-draggable": "^4.4.6",
