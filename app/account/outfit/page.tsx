@@ -3,76 +3,60 @@
 import React, { useEffect, useState } from "react";
 import styles from "../closet/closet.module.css";
 import ItemAccount from "@/components/ItemAccount";
-
-// Assuming this is the structure of clothes and outfits data from the backend
-type Item = {
-  img: string;
-  title: string;
-};
+import { useRouter } from 'next/navigation';
+import Image from "next/image";
 
 export default function Closet() {
-  const [items, setItems] = useState<Item[]>([]);
-  const [outfits, setOutfits] = useState<Item[]>([]);
-  const [userName, setUserName] = useState<string>("");
+  const [outfits, setOutfits] = useState<{ id: string; imageUrl: string; name: string }[]>([]);
+  const [loading, setLoading] = useState(true); // Track loading state
+  const router = useRouter();
 
-  // Example fetching clothes and outfits dynamically
   useEffect(() => {
-    // Fetch user name
-    const fetchUserName = async () => {
+    const fetchClosetData = async () => {
       try {
-        const res = await fetch("/api/user");
-        const data = await res.json();
-        setUserName(data.name);
+        const storedUser = localStorage.getItem('user');
+        if (storedUser) {
+          const parsedUser = JSON.parse(storedUser);
+          const userId = parsedUser.id;
+
+          // Fetch outfits
+          const outfitsRes = await fetch(`/api/closet/outfits?userId=${userId}`);
+          const outfitsData = await outfitsRes.json();
+          setOutfits(outfitsData.outfits);
+
+          // After fetching data, stop loading
+          setLoading(false);
+        } else {
+          router.push('/login');
+        }
       } catch (error) {
-        console.error("Failed to fetch user name:", error);
+        console.error("Failed to fetch closet data:", error);
+        setLoading(false); // Stop loading even on error
       }
     };
 
-    // Fetch items (clothes)
-    const fetchItems = async () => {
-      try {
-        const res = await fetch("/api/closet/clothes");
-        const data = await res.json();
-        setItems(data.clothes);
-      } catch (error) {
-        console.error("Failed to fetch clothes:", error);
-      }
-    };
+    fetchClosetData();
+  }, [router]);
 
-    // Fetch outfits
-    const fetchOutfits = async () => {
-      try {
-        const res = await fetch("/api/closet/outfits");
-        const data = await res.json();
-        setOutfits(data.outfits);
-      } catch (error) {
-        console.error("Failed to fetch outfits:", error);
-      }
-    };
-
-    fetchUserName();
-    fetchItems();
-    fetchOutfits();
-  }, []);
+  // If loading, display loading spinner
+  if (loading) {
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center', height: '100vh' }}>
+        <div className={styles.loader}></div>
+        <h2>Loading...</h2>
+      </div>
+    );
+  }
 
   return (
     <>
       <div className={styles.header}>
-        <h2>Шкаф</h2>
-        <div className={styles.hiUser}>
-          <h3>Привет,&nbsp;{userName}</h3>
-          <img src="/userAvatar.png" className={styles.userAvatar} />
-        </div>
+        <h2>Образы</h2>
       </div>
-
-      {/* Outfits Section */}
-      <div>
-        <h3 className={styles.sectionTitle}>Образы</h3>
-        <div className={styles.itemsGrid}>
-          {outfits.map((outfit, index) => (
-            <ItemAccount key={index} img={outfit.img} title={outfit.title} />
-          ))}
-        </div>
+      <div className={styles.items}>
+        {outfits.map((outfit) => (
+          <ItemAccount key={outfit.id} img={outfit.imageUrl} title={outfit.name} />
+        ))}
       </div>
     </>
   );

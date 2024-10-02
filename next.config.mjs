@@ -2,7 +2,7 @@
 const nextConfig = {
     reactStrictMode: true,
   images: {
-    domains: ['avatars.mds.yandex.net', 'i.pinimg.com'], // Add external domains here
+    domains: ['avatars.mds.yandex.net', 'atletika64.ru'], 
   },
 };
 

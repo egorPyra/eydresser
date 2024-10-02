@@ -2,7 +2,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: 1vw;
-    
+
 }
 
 
@@ -31,5 +31,119 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+/* HTML: <div class="loader"></div> */
+.loader {
+    width: 45px;
+    aspect-ratio: .75;
+    --c: no-repeat linear-gradient(#000 0 0);
+    background:
+        var(--c) 0% 100%,
+        var(--c) 50% 100%,
+        var(--c) 100% 100%;
+    background-size: 20% 65%;
+    animation: l5 1s infinite linear;
+}
+
+@keyframes l5 {
+    20% {
+        background-position: 0% 50%, 50% 100%, 100% 100%
+    }
+
+    40% {
+        background-position: 0% 0%, 50% 50%, 100% 100%
+    }
+
+    60% {
+        background-position: 0% 100%, 50% 0%, 100% 50%
+    }
+
+    80% {
+        background-position: 0% 100%, 50% 100%, 100% 0%
+    }
+}
+
+
+.addButton {
+    padding: 10px 15px;
+    background-color: #F0FF3D;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modalContent {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 30vw;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.modalContent h2 {
+    margin: 0;
+    margin-bottom: 20px;
+}
+
+.modalContent form {
+    display: flex;
+    flex-direction: column;
+}
+
+.modalContent input {
+    margin-top: 4px;
+    margin-bottom: 10px;
+}
+
+.modalContent input[type="text"],
+.modalContent input[type="file"] {
+    display: block;
+    background-color: #FFF;
+    border: 3px solid #D3D3D3;
+    border-radius: 12px;
+    /* width: 350px; */
+    /* height: 48px; */
+    margin-bottom: 20px;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+
+.modalContent label {
+    display: block;
+    position: relative;
+    margin-bottom: 5px;
+    width: fit-content;
+}
+
+.modalContent button {
+    padding: 10px 15px;
+    background-color: #F0FF3D;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.modalContent button[type="button"] {
+    background-color: #ccc;
 }
 

@@ -1,5 +1,11 @@
 .loginBody {
-    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    /* width: 100vw;
+    height: 100vh; */
     background-image: url("../../public/login/login-web.jpg");
     background-repeat: no-repeat;
     background-size: cover;
@@ -15,6 +21,10 @@ header {
 @media (max-width: 600px) {
     .loginBody {
         background-image: url("../../public/login/login-mob.jpg");
+    }
+
+    .main {
+        margin: 0 auto;
     }
 }
 
@@ -57,3 +67,8 @@ header {
     margin-bottom: 10px;
     cursor: pointer;
 }
+
+.main {
+    margin-left: 4vw;
+}
+

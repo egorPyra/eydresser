@@ -61,7 +61,7 @@ export default function Login() {
                     <Image src={'/logo.svg'} width={100} height={60} alt="logo" />
                 </Link>
             </header>
-            <main>
+            <main className='main'>
                 <h1>Вход</h1>
                 <form onSubmit={(e) => {
                     e.preventDefault();
