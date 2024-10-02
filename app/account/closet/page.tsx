@@ -18,6 +18,8 @@ export default function Closet() {
   const [newItem, setNewItem] = useState<{ name: string; image: string}>({ name: '', image: '' });
   const router = useRouter();
   const [loading, setLoading] = useState(true); 
+  const [ClothesUploading, setClothesUploading] = useState(false);
+
 
 
   useEffect(() => {
@@ -68,6 +70,7 @@ export default function Closet() {
   
     // Отправка данных
     try {
+      setClothesUploading(true);
       const res = await fetch('/api/closet/add', {
         method: 'POST',
         headers: {
@@ -84,11 +87,13 @@ export default function Closet() {
         const data = await res.json();
         setClothes((prev) => [...prev, data.newClothes]); // Обновляем список вещей
         setShowModal(false); // Закрываем модальное окно
+        setClothesUploading(false);
       } else {
         console.error('Failed to add item');
       }
     } catch (error) {
       console.error("Error submitting item:", error);
+      setClothesUploading(false);
     }
   };
   
@@ -140,7 +145,9 @@ export default function Closet() {
                 onChange={handleInputChange} 
                 required 
               />
-              <button type="submit">Добавить</button>
+              <button type="submit" className="authButton" disabled={ClothesUploading}>
+                        {ClothesUploading ? 'Загрузка...' : 'Добавить'}
+                    </button>
               <button type="button" onClick={() => setShowModal(false)}>Закрыть</button>
             </form>
           </div>

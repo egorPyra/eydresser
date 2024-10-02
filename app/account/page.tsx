@@ -8,6 +8,8 @@ export interface User {
   fullName: string;
   clothesCount: number;
   outfitsCount: number;
+  clothesLastMonth: number;
+  outfitLastMonth: number;
 }
 
 export default function Account() {
@@ -34,6 +36,8 @@ export default function Account() {
             fullName: data.fullName,
             clothesCount: data.clothesCount,
             outfitsCount: data.outfitsCount,
+            clothesLastMonth: data.clothesLastMonth,
+            outfitLastMonth: data.outfitLastMonth,
           });
         } else {
           console.log("User data not in localStorage, redirecting to login page...");
@@ -89,11 +93,11 @@ export default function Account() {
 
        <div className={styles.grid}>
         <div className={styles.column}>
-          <Cell header="Одежда" bigText={user.clothesCount.toString()} info1="+10 " info=" за последний месяц" />
+          <Cell header="Одежда" bigText={user.clothesCount.toString()} info1={"+" + user.clothesLastMonth} info=" за последний месяц" />
           {/* <Cell header="Просмотры" bigText="1.2M" info1="+40к " info=" за последний месяц" /> */}
         </div>
         <div className={styles.column}>
-          <Cell header="Образы" bigText={user.outfitsCount.toString()} info1="+1 " info=" за последний месяц" />
+          <Cell header="Образы" bigText={user.outfitsCount.toString()} info1={"+" + user.outfitLastMonth} info=" за последний месяц" />
           {/* <CellImg header="История образов" /> */}
         </div>
         <div className={`${styles.column} ${styles.large}`}>

@@ -22,11 +22,34 @@ export async function GET(req: Request, { params }: { params: { id: string } }) 
       return NextResponse.json({ message: 'User not found' }, { status: 404 });
     }
 
+    const oneMonthAgo = new Date();
+    oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
+
+    const clothesLastMonth = await prisma.clothes.count({
+      where: {
+        userId: user.id,
+        createdAt: {
+          gte: oneMonthAgo,
+        },
+      },
+    });
+
+    const outfitLastMonth = await prisma.outfit.count({
+      where: {
+        userId: user.id,
+        createdAt: {
+          gte: oneMonthAgo,
+        },
+      },
+    });
+
     // Respond with user data
     return NextResponse.json({
       fullName: user.fullName,
       clothesCount: user.clothes.length,
       outfitsCount: user.outfits.length,
+      clothesLastMonth: clothesLastMonth, 
+      outfitLastMonth: outfitLastMonth, 
     });
   } catch (error) {
     console.error('Error fetching user data:', error);
