@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build && prisma generate",
+    "build": "next build",
+    "postinstall": "prisma generate",
     "start": "next start",
     "lint": "next lint"
   },
@@ -21,7 +22,6 @@
     "axios": "^1.7.2",
     "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
-    "firebase": "^10.14.0",
     "gsap": "^3.12.5",
     "next": "^14.2.13",
     "next-auth": "^4.24.7",
