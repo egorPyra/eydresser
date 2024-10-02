@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function GET(req: NextRequest) {
   const query = req.nextUrl.searchParams.get('query') || '';
 
-  const products = await prisma.product.findMany({
+  const clothes = await prisma.clothes.findMany({
     where: {
       name: {
         contains: query,
@@ -13,5 +13,5 @@ export async function GET(req: NextRequest) {
     },
   });
 
-  return NextResponse.json(products);
+  return NextResponse.json(clothes);
 }

@@ -1,32 +1,59 @@
 'use client'
 
-
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./closet.module.css";
 import ItemAccount from "@/components/ItemAccount";
-
+import { useRouter } from 'next/navigation';
+import Image from "next/image";
 
 export default function Closet() {
-  const items = [
-    {img:"/closet/ 8.avif", title:"джинсовка"},
-    {img:"/closet/ 1.avif", title:"шорты"},
-    {img:"/closet/ 2.avif", title:"куртка"},
-    {img:"/closet/ 3.avif", title:"башмаки"},
-    {img:"/closet/ 4.avif", title:"панама"},
-    {img:"/closet/ 5.avif", title:"сумка"},
-  ]
+  const [clothes, setClothes] = useState([]);
+  const [outfits, setOutfits] = useState([]);
+  const router = useRouter();
+
+  useEffect(() => {
+    const fetchClosetData = async () => {
+      try {
+        const storedUser = localStorage.getItem('user');
+        if (storedUser) {
+          const parsedUser = JSON.parse(storedUser);
+          const userId = parsedUser.id;
+
+          // Fetch clothes
+          const clothesRes = await fetch(`/api/closet/clothes?userId=${userId}`);
+          const clothesData = await clothesRes.json();
+          setClothes(clothesData.clothes);
+
+          // Fetch outfits
+          const outfitsRes = await fetch(`/api/closet/outfits?userId=${userId}`);
+          const outfitsData = await outfitsRes.json();
+          setOutfits(outfitsData.outfits);
+        } else {
+          router.push('/login');
+        }
+      } catch (error) {
+        console.error("Failed to fetch closet data:", error);
+      }
+    };
+
+    fetchClosetData();
+  }, [router]);
+
   
+
   return (
     <>
       <div className={styles.header}>
         <h2>Шкаф</h2>
-        <div className={styles.hiUser}>
-          <h3>Привет,&nbsp;Егор</h3>
-          <img src="/userAvatar.png" className={styles.userAvatar}/>
-        </div>
+        
       </div>
       <div className={styles.items}>
-        {items.map((item) => <ItemAccount img={item.img} title={item.title}/>)}
+        {clothes.map((item) => (
+          <ItemAccount key={item.id} img={item.imageUrl} title={item.name} />
+        ))}
+        {outfits.map((outfit) => (
+          <ItemAccount key={outfit.id} img={outfit.imageUrl} title={outfit.name} />
+        ))}
       </div>
     </>
   );

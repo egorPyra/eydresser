@@ -13,10 +13,12 @@ export default function Sidebar() {
     const menuItems = [
         {icon: '/sidebarIcons/main.svg', name: 'главная', link: '/account'},
         {icon: '/sidebarIcons/closet.svg', name: 'шкаф', link: '/account/closet'},
-        {icon: '/sidebarIcons/styles.svg', name: 'образы', link: '/account/outfit', status: 'hidden'},
-        {icon: '/sidebarIcons/heart.svg', name: 'понравилось', link: '/account/liked'},
+        {icon: '/sidebarIcons/styles.svg', name: 'образы', link: '/account/outfit' },
+        {icon: '/sidebarIcons/heart.svg', name: 'понравилось', link: '/account/liked', status: 'hidden'},
         {icon: '/sidebarIcons/settings.svg', name: 'настройки', link: '/account/settings'},
         {icon: '/sidebarIcons/add.svg', name: 'добавить', link: '/account/add'},
+        {icon: '/sidebarIcons/add.svg', name: 'создать образ', link: '/account/newOutfit'},
+
         {icon: '/sidebarIcons/exit.svg', name: 'выйти', link: '../login'},
     ];
 

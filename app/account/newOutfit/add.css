@@ -1,0 +1,141 @@
+.authLabel {
+    display: block;
+    position: relative;
+    margin-bottom: 5px;
+    width: fit-content;
+}
+
+.authInput {
+    display: block;
+    background-color: #FFF;
+    border: 3px solid #D3D3D3;
+    border-radius: 12px;
+    width: 350px;
+    height: 48px;
+    margin-bottom: 20px;
+    color: #000;
+    font-size: 1rem;
+    padding: 0 10px;
+}
+
+.authButton {
+    background: #3498DB;
+    border: none;
+    width: 350px;
+    height: 48px;
+    border-radius: 12px;
+    font-family: "Raleway", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 1.2em;
+    line-height: 100%;
+    color: #FFF;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.content {
+    display: flex;
+}
+
+.greyZone {
+    width: 30vw;
+    height: 30vw;
+    background-color: #E7E7E7;
+    border-radius: 15px;
+    margin-right: 20px;
+}
+
+.addFromDevice {
+    border-radius: 15px;
+    border: 3px dashed #333333;
+    min-width: 320px;
+    height: 216px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.addFromDevice p {
+    color: #3498DB;
+}
+
+.addFromDevice span {
+    color: #333333;
+}
+
+.rotate {
+    position: relative;
+    margin: 20px 0;
+}
+
+/* .rotate::before {
+    position: absolute;
+    content: '';
+    height: 3px;
+    width: 150px;
+    right: 80px;
+    top: 15px;
+    background-color: #3498DB;
+    border-radius: 3px;
+}
+
+.rotate::after {
+    position: absolute;
+    content: '';
+    height: 10px;
+    width: 10px;
+    right: 180px;
+    top: 12px;
+    background-color: #174462;
+    border-radius: 50%;
+} */
+
+.imgWrapper {
+    width: 80%;
+    height: 80%;
+    position: relative;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.clothesItem {
+    width: 100px;
+    height: 100px;
+}
+
+.listClothes {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 320px;
+    margin: 30px 0;
+}
+
+.greyZone {
+    width: 100%;
+    height: 400px;
+    background-color: #e0e0e0;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .draggableImage {
+    width: 100px;
+    height: 100px;
+    cursor: default;
+  }
+
+  .draggableImage button {
+    cursor: move;
+  }
+  
+  .draggableImage img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  

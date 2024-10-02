@@ -15,16 +15,48 @@ model User {
     email    String @unique
     password String
 
+    clothes  Clothes[]    
+    outfits  Outfit[]    
+
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 }
 
-model Product {
+model Clothes {
     id Int @id @default(autoincrement())
 
     name     String
-    imageUrl String
+    imageUrl String?   
+
+    userId   Int        
+    user     User @relation(fields: [userId], references: [id]) 
+
+    outfitClothes OutfitClothes[] 
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
+}
+
+model Outfit {
+    id Int @id @default(autoincrement())
+
+    name String
+
+    userId Int  
+    user   User @relation(fields: [userId], references: [id]) 
+
+    clothes  OutfitClothes[] 
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model OutfitClothes {
+    outfitId Int  
+    clothesId Int 
+
+    outfit   Outfit  @relation(fields: [outfitId], references: [id])
+    clothes  Clothes @relation(fields: [clothesId], references: [id])
+
+    @@id([outfitId, clothesId]) 
 }
