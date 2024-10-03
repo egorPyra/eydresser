@@ -3,8 +3,8 @@
 import React, { useState } from 'react';
 import styles from '../closet/closet.module.css';
 import './settings.css';
-import toast, { Toaster } from 'react-hot-toast';  // Importing toast
-import bcrypt from 'bcrypt';
+import toast, { Toaster } from 'react-hot-toast';  
+import bcrypt from 'bcryptjs';
 
 export default function Settings() {
   const [formData, setFormData] = useState({
@@ -14,7 +14,7 @@ export default function Settings() {
     confirmPassword: ''
   });
 
-  const [loading, setLoading] = useState(false);  // Add loading state to handle button disable
+  const [loading, setLoading] = useState(false);  
 
   // Handle input changes
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -31,7 +31,6 @@ export default function Settings() {
 
     const { name, email, password, confirmPassword } = formData;
 
-    // Basic validation for password
     if (password && password !== confirmPassword) {
       toast.error('Пароли не совпадают.');
       return;
