@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import styles from '../closet/closet.module.css';
 import './settings.css';
 import toast, { Toaster } from 'react-hot-toast';  // Importing toast
-import bcrypt from 'bcryptjs';  // Importing bcrypt for password hashing
+import bcrypt from 'bcrypt';  // Importing bcrypt for password hashing
 
 export default function Settings() {
   const [formData, setFormData] = useState({
