@@ -51,8 +51,8 @@ export default function Closet() {
     }
     console.log(rotateAngle);
   }, [rotateAngle]);
-  
-  
+
+
 
   const handleChangeRotation = (e: React.ChangeEvent<HTMLInputElement>) => {
     const angle = parseInt(e.target.value);
@@ -100,8 +100,12 @@ export default function Closet() {
           {images.map((image) => (
             <DraggableImage
               src={image.src}
-              alt={image.alt}
-              rotateAngle={rotateAngle}
+              alt={image.alt} 
+              positionX={0} 
+              positionY={0} 
+              onPositionChange={function (positionX: number, positionY: number): void {
+                throw new Error("Function not implemented.");
+              }}              // rotateAngle={rotateAngle}
             />
           ))}
         </div>
@@ -118,7 +122,7 @@ export default function Closet() {
               style={{ display: 'none' }}
             />
           </div>
-          <p> <br/> Для перемещения удерживайте 🔘</p>
+          <p> <br /> Для перемещения удерживайте 🔘</p>
           <div className="rotate">
             <h3>Поворот</h3>
             <input
