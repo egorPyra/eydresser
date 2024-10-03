@@ -1,7 +1,16 @@
 .registrationBody {
-    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    /* height: 100vh; */
     background-repeat: no-repeat;
     background-size: cover;
     background-image: url("../../public/login/reg-web.jpg");
     background-position: center;
+}
+
+.main {
+    margin-left: 4vw;
 }

@@ -68,7 +68,7 @@ export default function Registration() {
                     <Image src={'/logo.svg'} width={100} height={60} alt="logo" />
                 </Link>
             </header>
-            <main>
+            <main className="main">
                 <h1>Регистрация</h1>
                 <form onSubmit={handleSubmit}>
                     <label htmlFor="fullName" className="authLabel"><h6>Имя</h6></label>
