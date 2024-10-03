@@ -15,8 +15,8 @@ model User {
     email    String @unique
     password String
 
-    clothes  Clothes[]    
-    outfits  Outfit[]    
+    clothes Clothes[]
+    outfits Outfit[]
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
@@ -26,12 +26,12 @@ model Clothes {
     id Int @id @default(autoincrement())
 
     name     String
-    imageUrl String?   
+    imageUrl String?
 
-    userId   Int        
-    user     User @relation(fields: [userId], references: [id]) 
+    userId Int
+    user   User @relation(fields: [userId], references: [id])
 
-    outfitClothes OutfitClothes[] 
+    outfitClothes OutfitClothes[]
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
@@ -42,21 +42,25 @@ model Outfit {
 
     name String
 
-    userId Int  
-    user   User @relation(fields: [userId], references: [id]) 
+    userId Int
+    user   User @relation(fields: [userId], references: [id])
 
-    clothes  OutfitClothes[] 
+    clothes OutfitClothes[]
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 }
 
 model OutfitClothes {
-    outfitId Int  
-    clothesId Int 
+    id        Int     @id @default(autoincrement())
 
-    outfit   Outfit  @relation(fields: [outfitId], references: [id])
-    clothes  Clothes @relation(fields: [clothesId], references: [id])
+    outfit    Outfit  @relation(fields: [outfitId], references: [id])
+    outfitId  Int
 
-    @@id([outfitId, clothesId]) 
+    clothes   Clothes @relation(fields: [clothesId], references: [id])
+    clothesId Int
+    
+    positionX Float // Координата X вещи в образе
+    positionY Float // Координата Y вещи в образе
+    rotation  Float // Угол поворота вещи в образе
 }

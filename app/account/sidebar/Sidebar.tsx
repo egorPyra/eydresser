@@ -16,7 +16,6 @@ export default function Sidebar() {
         {icon: '/sidebarIcons/styles.svg', name: 'образы', link: '/account/outfit' },
         {icon: '/sidebarIcons/heart.svg', name: 'понравилось', link: '/account/liked', status: 'hidden'},
         {icon: '/sidebarIcons/settings.svg', name: 'настройки', link: '/account/settings'},
-        {icon: '/sidebarIcons/add.svg', name: 'добавить', link: '/account/add'},
         {icon: '/sidebarIcons/add.svg', name: 'создать образ', link: '/account/newOutfit'},
 
         {icon: '/sidebarIcons/exit.svg', name: 'выйти', link: '../login'},

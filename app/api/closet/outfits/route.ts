@@ -1,22 +1,35 @@
 import { NextResponse } from 'next/server';
-import { prisma } from '../../../../prisma/prisma-client';
+import { prisma } from '../../../../prisma/prisma-client';  
 
-export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
-  const userId = searchParams.get('userId');
-
-  if (!userId) {
-    return NextResponse.json({ error: "User ID is required" }, { status: 400 });
-  }
-
+export async function POST(request: Request) {
   try {
-    const outfits = await prisma.outfit.findMany({
-      where: { userId: parseInt(userId, 10) },
-      include: { clothes: true }  // Include associated clothes for each outfit
+    const { name, images, userId } = await request.json();
+
+    // Проверка данных
+    if (!name || !images || !userId) {
+      return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
+    }
+
+    // Сохранение образа в базу данных
+    const outfit = await prisma.outfit.create({
+      data: {
+        name,
+        userId: parseInt(userId, 10),
+        clothes: {
+          create: images.map((image: { src: string; alt: string; positionX: number; positionY: number; rotation: number }) => ({
+            imageUrl: image.src,
+            name: image.alt,
+            positionX: image.positionX,
+            positionY: image.positionY,
+            rotation: image.rotation,
+          })),
+        },
+      },
     });
 
-    return NextResponse.json({ outfits });
+    return NextResponse.json({ message: "Outfit saved successfully", outfit }, { status: 201 });
   } catch (error) {
-    return NextResponse.json({ error: "Failed to fetch outfits" }, { status: 500 });
+    console.error("Error saving outfit:", error);
+    return NextResponse.json({ error: "Failed to save outfit" }, { status: 500 });
   }
 }
