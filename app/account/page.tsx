@@ -105,7 +105,7 @@ export default function Account() {
             <h6>Погода</h6>
             <div className={styles.gradus}>
               <img src="/weather.png" className={styles.weatherIcon} />
-              <p className={styles.temperature}>+15º</p>
+              <p className={styles.temperature}>+1º</p>
             </div>
             <p style={{ margin: '10px 0' }}>📍 Санкт-Петербург</p>
             <div className={styles.table}>
@@ -113,23 +113,23 @@ export default function Account() {
                 <tbody>
                   <tr>
                     <td>Ср</td>
-                    <td>+16º</td>
+                    <td>0º</td>
                   </tr>
                   <tr>
                     <td>Чт</td>
-                    <td>+17º</td>
+                    <td>+1º</td>
                   </tr>
                   <tr>
                     <td>Пт</td>
-                    <td>+14º</td>
+                    <td>+2º</td>
                   </tr>
                   <tr>
                     <td>Сб</td>
-                    <td>+19º</td>
+                    <td>+1º</td>
                   </tr>
                   <tr>
                     <td>Вс</td>
-                    <td>+21º</td>
+                    <td>+2º</td>
                   </tr>
                 </tbody>
               </table>
