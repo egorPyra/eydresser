@@ -8,17 +8,10 @@ import * as path from 'path';
 
 // Тип для представления характеристик одежды
 interface ClothingAttributes {
-  type: string;        // Тип одежды (футболка, джинсы, платье и т.д.)
-  color: string;       // Основной цвет
-  colors: string[];    // Все цвета
-  pattern: string;     // Узор (однотонный, полосатый, клетчатый и т.д.)
-  style: string;       // Стиль (повседневный, деловой, спортивный и т.д.)
-  season: string;      // Сезон (лето, зима, весна/осень, всесезонная)
-  material: string;    // Материал, если виден (джинса, хлопок, кожа и т.д.)
-  fit: string;         // Посадка (облегающая, свободная и т.д.)
-  occasion: string;    // Повод (повседневная, для офиса, для вечеринки и т.д.)
-  gender: string;      // Для кого предназначена (мужская, женская, унисекс)
-  formality: string;   // Уровень формальности (повседневная, формальная, полуформальная)
+  type: string;   
+  color: string;   
+  season: string;  
+  material: string;
 }
 
 /**
@@ -56,7 +49,8 @@ export class ClothingAnalyzer {
       return result;
     } catch (error) {
       console.error('Ошибка при анализе изображения по URL:', error);
-      throw new Error(`Не удалось проанализировать изображение по URL: ${error.message}`);
+      const errorMessage = (error instanceof Error) ? error.message : String(error);
+      throw new Error(`Не удалось проанализировать изображение по URL: ${errorMessage}`);
     }
   }
 
@@ -82,7 +76,8 @@ export class ClothingAnalyzer {
       return imagePath;
     } catch (error) {
       console.error('Ошибка при скачивании изображения:', error);
-      throw new Error(`Не удалось скачать изображение: ${error.message}`);
+      const errorMessage = (error instanceof Error) ? error.message : String(error);
+      throw new Error(`Не удалось скачать изображение: ${errorMessage}`);
     }
   }
 
@@ -140,7 +135,6 @@ export class ClothingAnalyzer {
             ]
           }
         ],
-        //  max_tokens: 1000
       });
 
       // Извлекаем JSON ответ из ответа API
@@ -154,7 +148,8 @@ export class ClothingAnalyzer {
       return clothingData;
     } catch (error) {
       console.error('Ошибка при анализе изображения:', error);
-      throw new Error(`Не удалось проанализировать изображение: ${error.message}`);
+      const errorMessage = (error instanceof Error) ? error.message : String(error);
+      throw new Error(`Не удалось проанализировать изображение: ${errorMessage}`);
     }
   }
 }

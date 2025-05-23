@@ -49,6 +49,20 @@
 
 .addFromDevice {
     border-radius: 15px;
+    
+    border: 3px dashed #333333;
+    min-width: 320px;
+    height: 216px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.addFromDevice.dragActive {
+    border: 2px dashed #3498DB;
+    background-color: rgba(52, 152, 219, 0.1);
     border: 3px dashed #333333;
     min-width: 320px;
     height: 216px;

@@ -5,11 +5,16 @@ import styles from "./closet.module.css";
 import ItemAccount from "@/components/ItemAccount";
 import { useRouter } from 'next/navigation';
 import Image from "next/image";
+import ClothesEditModal from "@/components/ClothesEditModal";
 
 type ClothesItem = {
   id: string;
   imageUrl: string;
   name: string;
+  type?: string;
+  color?: string;
+  material?: string;
+  season?: string;
 };
 
 export default function Closet() {
@@ -18,9 +23,13 @@ export default function Closet() {
   const [newItem, setNewItem] = useState<{ name: string; image: string; file: File | null }>({ name: '', image: '', file: null });
   const router = useRouter();
   const [loading, setLoading] = useState(true); 
-  const [ClothesUploading, setClothesUploading] = useState(false);
+  const [clothesUploading, setClothesUploading] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  
+  // Состояния для модального окна редактирования параметров
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [currentClothesItem, setCurrentClothesItem] = useState<ClothesItem | null>(null);
 
   useEffect(() => {
     const fetchClosetData = async () => {
@@ -104,7 +113,7 @@ export default function Closet() {
   // Функция для обработки клика по внешней области модального окна
   const handleModalOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
     // Проверяем, что клик был по оверлею, а не по контенту модального окна
-    if (e.target === e.currentTarget) {
+    if (!clothesUploading && e.target === e.currentTarget) {
       setShowModal(false);
     }
   };
@@ -141,8 +150,17 @@ export default function Closet() {
       
       const data = await res.json();
       
-      setClothes((prev) => [...prev, data.newClothes]); // Обновляем список вещей
-      setShowModal(false); // Закрываем модальное окно
+      // Обновляем список вещей
+      const newClothes = data.newClothes;
+      setClothes((prev) => [...prev, newClothes]);
+      
+      // Закрываем модальное окно загрузки
+      setShowModal(false);
+      
+      // Устанавливаем текущий предмет и открываем окно редактирования параметров
+      setCurrentClothesItem(newClothes);
+      setShowEditModal(true);
+      
       // Сбрасываем форму
       setNewItem({ name: '', image: '', file: null });
 
@@ -153,75 +171,23 @@ export default function Closet() {
       setClothesUploading(false);
     }
   };
-  
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-  
-    const storedUser = localStorage.getItem('user');
-    if (!storedUser) return;
-  
-    const parsedUser = JSON.parse(storedUser);
-    const userId = parsedUser.id as string;
-  
-    // Проверяем наличие файла или изображения
-    if (!newItem.file && !newItem.image) {
-      alert('Пожалуйста, добавьте изображение');
-      return;
-    }
-    
+
+  // Функция обновления списка одежды после редактирования параметров
+  const handleEditSuccess = async () => {
     try {
-      setClothesUploading(true);
+      const storedUser = localStorage.getItem('user');
+      if (!storedUser) return;
       
-      let res;
+      const parsedUser = JSON.parse(storedUser);
+      const userId = parsedUser.id as string;
       
-      // Если есть файл, отправляем через FormData
-      if (newItem.file) {
-        // Создаем FormData для загрузки файла
-        const formData = new FormData();
-        formData.append('image', newItem.file);
-        formData.append('userId', userId);
-        formData.append('name', newItem.name);
-        
-        // Отправляем файл напрямую в API добавления одежды
-        res = await fetch('/api/closet/add', {
-          method: 'POST',
-          body: formData,
-        });
-      } else {
-        // Если файла нет, но есть URL изображения, отправляем как JSON
-        res = await fetch('/api/closet/add', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            name: newItem.name,
-            image: newItem.image,
-            userId: userId,
-          }),
-        });
-      }
-  
-      if (res.ok) {
-        const data = await res.json();
-        setClothes((prev) => [...prev, data.newClothes]); // Обновляем список вещей
-        setShowModal(false); // Закрываем модальное окно
-        // Сбрасываем форму
-        setNewItem({ name: '', image: '', file: null });
-      } else {
-        console.error('Failed to add item');
-        alert('Не удалось добавить предмет. Пожалуйста, попробуйте снова.');
-      }
-      setClothesUploading(false);
+      const clothesRes = await fetch(`/api/closet/clothes?userId=${userId}`);
+      const clothesData = await clothesRes.json();
+      setClothes(clothesData.clothes);
     } catch (error) {
-      console.error("Error submitting item:", error);
-      setClothesUploading(false);
-      alert('Произошла ошибка. Пожалуйста, попробуйте снова.');
+      console.error("Failed to update closet data:", error);
     }
   };
-  
-  
-
 
   if (loading) {
     return (
@@ -242,15 +208,27 @@ export default function Closet() {
 
       <div className={styles.items}>
         {clothes.map((item) => (
-          <ItemAccount key={item.id} img={item.imageUrl} title={item.name} />
+          <ItemAccount 
+            key={item.id} 
+            id={item.id}
+            img={item.imageUrl} 
+            title={item.name} 
+            onClick={(id) => {
+              const selectedItem = clothes.find(item => item.id === id);
+              if (selectedItem) {
+                setCurrentClothesItem(selectedItem);
+                setShowEditModal(true);
+              }
+            }}
+          />
         ))}
       </div>
 
-      {/* Modal Window */}
+      {/* Modal Window for upload */}
       {showModal && (
         <div className={styles.modalOverlay} onClick={handleModalOverlayClick}>
           <div className={styles.modalContent}>
-            {ClothesUploading ? (
+            {clothesUploading ? (
               <div style={{ textAlign: 'center', padding: '20px 0' }}>
                 <div className={styles.loader} style={{ margin: '0 auto 20px' }}></div>
                 <p>Загрузка...</p>
@@ -276,6 +254,21 @@ export default function Closet() {
             )}
           </div>
         </div>
+      )}
+
+      {/* Modal Window for editing clothes parameters */}
+      {showEditModal && currentClothesItem && (
+        <ClothesEditModal
+          isOpen={showEditModal}
+          onClose={() => setShowEditModal(false)}
+          imageUrl={currentClothesItem.imageUrl}
+          clothesId={currentClothesItem.id}
+          initialType={currentClothesItem.type || 'Футболка'}
+          initialColor={currentClothesItem.color || 'Синий'}
+          initialMaterial={currentClothesItem.material || 'Хлопок'}
+          initialSeason={currentClothesItem.season || 'Всесезонный'}
+          onSuccess={handleEditSuccess}
+        />
       )}
     </>
   );

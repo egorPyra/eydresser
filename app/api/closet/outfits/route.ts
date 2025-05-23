@@ -3,20 +3,21 @@ import { prisma } from '../../../../prisma/prisma-client';
 
 export async function POST(request: Request) {
   try {
-    const { name, images, userId } = await request.json();
+    const { name, clothes, userId } = await request.json();
 
-    if (!name || !images || !userId) {
+    if (!name || !clothes || !userId) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
+
+    console.log("Received data:", { name, clothes, userId });
 
     const outfit = await prisma.outfit.create({
       data: {
         name,
         userId: parseInt(userId, 10),
         clothes: {
-          create: images.map((image: { src: string; alt: string; positionX: number; positionY: number; rotation: number }) => ({
-            imageUrl: image.src,
-            name: image.alt,
+          create: clothes.map((image: { id: number; positionX: number; positionY: number; rotation: number }) => ({
+            clothesId: image.id,
             positionX: image.positionX,
             positionY: image.positionY,
             rotation: image.rotation,

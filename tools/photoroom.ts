@@ -59,7 +59,8 @@ export class PhotoRoomAPI {
       return result;
     } catch (error) {
       console.error('Ошибка при удалении фона по URL:', error);
-      throw new Error(`Не удалось удалить фон изображения: ${error.message}`);
+      const errorMessage = error instanceof Error ? error.message : 'Неизвестная ошибка';
+      throw new Error(`Не удалось удалить фон изображения: ${errorMessage}`);
     }
   }
   
@@ -85,7 +86,8 @@ export class PhotoRoomAPI {
       return imagePath;
     } catch (error) {
       console.error('Ошибка при скачивании изображения:', error);
-      throw new Error(`Не удалось скачать изображение: ${error.message}`);
+      const errorMessage = error instanceof Error ? error.message : 'Неизвестная ошибка';
+      throw new Error(`Не удалось скачать изображение: ${errorMessage}`);
     }
   }
   
@@ -103,8 +105,8 @@ export class PhotoRoomAPI {
       // Читаем файл изображения
       const imageFile = await fs.readFile(imagePath);
       
-      // Создаем Blob из файла
-      const blob = new Blob([imageFile]);
+      // Создаем Blob из файла с правильным преобразованием типа
+      const blob = new Blob([new Uint8Array(imageFile)]);
       
       // Добавляем файл в формдату
       formData.append('image_file', blob, path.basename(imagePath));
@@ -130,17 +132,44 @@ export class PhotoRoomAPI {
     } catch (error) {
       console.error('Ошибка при удалении фона:', error);
       
-      // Если ошибка содержит данные в формате JSON, пытаемся их распарсить
-      if (error.response && error.response.data) {
+      // Проверяем, является ли error объектом с response
+      if (error && typeof error === 'object' && 'response' in error && 
+          error.response && typeof error.response === 'object' && 'data' in error.response) {
         try {
-          const errorData = JSON.parse(Buffer.from(error.response.data).toString());
-          throw new Error(`PhotoRoom API: ${errorData.message || 'Ошибка API'}`);
+          // Преобразуем данные ответа в строку с правильной типизацией
+          const responseData = error.response.data;
+          let errorText: string;
+          
+          if (typeof responseData === 'string') {
+            errorText = responseData;
+          } else if (Buffer.isBuffer(responseData)) {
+            errorText = responseData.toString();
+          } else if (typeof responseData === 'object' && responseData !== null) {
+            // Пытаемся создать буфер из объекта
+            try {
+              errorText = Buffer.from(responseData as unknown as ArrayBuffer).toString();
+            } catch {
+              errorText = JSON.stringify(responseData);
+            }
+          } else {
+            errorText = String(responseData);
+          }
+          
+          const errorData = JSON.parse(errorText);
+          if (typeof errorData === 'object' && errorData !== null && 'message' in errorData && 
+             typeof errorData.message === 'string') {
+            throw new Error(`PhotoRoom API: ${errorData.message || 'Ошибка API'}`);
+          } else {
+            throw new Error('PhotoRoom API: Ошибка API');
+          }
         } catch (parseError) {
-          throw new Error(`Не удалось удалить фон изображения: ${error.message}`);
+          const errorMessage = error instanceof Error ? error.message : 'Неизвестная ошибка';
+          throw new Error(`Не удалось удалить фон изображения: ${errorMessage}`);
         }
       }
       
-      throw new Error(`Не удалось удалить фон изображения: ${error.message}`);
+      const errorMessage = error instanceof Error ? error.message : 'Неизвестная ошибка';
+      throw new Error(`Не удалось удалить фон изображения: ${errorMessage}`);
     }
   }
   
@@ -168,7 +197,8 @@ export class PhotoRoomAPI {
       return result;
     } catch (error) {
       console.error('Ошибка при удалении фона из буфера:', error);
-      throw new Error(`Не удалось удалить фон изображения: ${error.message}`);
+      const errorMessage = error instanceof Error ? error.message : 'Неизвестная ошибка';
+      throw new Error(`Не удалось удалить фон изображения: ${errorMessage}`);
     }
   }
   
@@ -187,7 +217,8 @@ export class PhotoRoomAPI {
       await fs.writeFile(outputImagePath, resultBuffer);
     } catch (error) {
       console.error('Ошибка при сохранении изображения без фона:', error);
-      throw new Error(`Не удалось сохранить изображение без фона: ${error.message}`);
+      const errorMessage = error instanceof Error ? error.message : 'Неизвестная ошибка';
+      throw new Error(`Не удалось сохранить изображение без фона: ${errorMessage}`);
     }
   }
 }

@@ -20,7 +20,7 @@ export default function Closet() {
           const userId = parsedUser.id;
 
           // Fetch outfits
-          const outfitsRes = await fetch(`/api/closet/outfits?userId=${userId}`);
+          const outfitsRes = await fetch(`/api/outfits?userId=${userId}`);
           const outfitsData = await outfitsRes.json();
           setOutfits(outfitsData.outfits);
 
@@ -55,7 +55,13 @@ export default function Closet() {
       </div>
       <div className={styles.items}>
         {outfits.map((outfit) => (
-          <ItemAccount key={outfit.id} img={outfit.imageUrl} title={outfit.name} />
+          <ItemAccount 
+            key={outfit.id} 
+            id={outfit.id}
+            img={outfit.imageUrl} 
+            title={outfit.name} 
+            navigationUrl={`/account/newOutfit?outfitId=${outfit.id}`}
+          />
         ))}
       </div>
     </>
