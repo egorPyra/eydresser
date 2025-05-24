@@ -1,26 +1,35 @@
 'use client'
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef, ChangeEvent } from "react";
 import styles from "./closet.module.css";
 import ItemAccount from "@/components/ItemAccount";
 import { useRouter } from 'next/navigation';
 import Image from "next/image";
+import ClothesEditModal from "@/components/ClothesEditModal";
 
 type ClothesItem = {
   id: string;
   imageUrl: string;
   name: string;
+  type?: string;
+  color?: string;
+  material?: string;
+  season?: string;
 };
 
 export default function Closet() {
   const [clothes, setClothes] = useState<ClothesItem[]>([]);
   const [showModal, setShowModal] = useState(false);
-  const [newItem, setNewItem] = useState<{ name: string; image: string}>({ name: '', image: '' });
+  const [newItem, setNewItem] = useState<{ name: string; image: string; file: File | null }>({ name: '', image: '', file: null });
   const router = useRouter();
   const [loading, setLoading] = useState(true); 
-  const [ClothesUploading, setClothesUploading] = useState(false);
-
-
+  const [clothesUploading, setClothesUploading] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  
+  // Состояния для модального окна редактирования параметров
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [currentClothesItem, setCurrentClothesItem] = useState<ClothesItem | null>(null);
 
   useEffect(() => {
     const fetchClosetData = async () => {
@@ -46,59 +55,139 @@ export default function Closet() {
 
     fetchClosetData();
   }, [router]);
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setNewItem((prev) => ({ ...prev, [name]: value }));
+  
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    setIsDragging(true);
   };
   
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
+    setIsDragging(false);
+  };
   
-    // Проверяем, что URL начинается с 'http://' или 'https://'
-    if (!newItem.image.startsWith('http://') && !newItem.image.startsWith('https://')) {
-      alert('Введите корректный URL изображения (должен начинаться с http:// или https://)');
+  const handleDrop = async (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    setIsDragging(false);
+    
+    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+      const file = e.dataTransfer.files[0];
+      handleFileChange(file);
+      await uploadAndAddItem(file);
+    }
+  };
+  
+  const handleFileChange = (file: File) => {
+    // Проверка типа файла
+    if (!file.type.match('image.*')) {
+      alert('Пожалуйста, выберите изображение');
       return;
     }
+    
+    // Создаем временный URL для отображения
+    const imageUrl = URL.createObjectURL(file);
+    
+    setNewItem(prev => ({
+      ...prev,
+      image: imageUrl,
+      file: file
+    }));
+  };
   
+  const handleFileInputChange = async (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      const file = e.target.files[0];
+      handleFileChange(file);
+      
+      // Автоматически запустить загрузку файла после выбора
+      await uploadAndAddItem(file);
+    }
+  };
+  
+  const openFileSelector = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+  
+  // Функция для обработки клика по внешней области модального окна
+  const handleModalOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    // Проверяем, что клик был по оверлею, а не по контенту модального окна
+    if (!clothesUploading && e.target === e.currentTarget) {
+      setShowModal(false);
+    }
+  };
+
+  // Функция для загрузки файла и добавления предмета
+  const uploadAndAddItem = async (file: File) => {
     const storedUser = localStorage.getItem('user');
     if (!storedUser) return;
   
     const parsedUser = JSON.parse(storedUser);
     const userId = parsedUser.id as string;
-  
-    // Отправка данных
+    
     try {
       setClothesUploading(true);
+      
+      // Генерируем имя предмета на основе имени файла или используем дефолтное
+      const fileName = file.name.split('.')[0] || 'Предмет одежды';
+      
+      // Создаем FormData для загрузки файла напрямую в /api/closet/add
+      const formData = new FormData();
+      formData.append('image', file);
+      formData.append('userId', userId);
+      formData.append('name', fileName);
+      
+      // Загружаем файл и создаем предмет одежды за один запрос
       const res = await fetch('/api/closet/add', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: newItem.name,
-          image: newItem.image,  // Убедитесь, что это корректный URL
-          userId: userId,
-        }),
+        body: formData,
       });
-  
-      if (res.ok) {
-        const data = await res.json();
-        setClothes((prev) => [...prev, data.newClothes]); // Обновляем список вещей
-        setShowModal(false); // Закрываем модальное окно
-        setClothesUploading(false);
-      } else {
-        console.error('Failed to add item');
+      
+      if (!res.ok) {
+        throw new Error('Ошибка загрузки изображения и создания предмета одежды');
       }
+      
+      const data = await res.json();
+      
+      // Обновляем список вещей
+      const newClothes = data.newClothes;
+      setClothes((prev) => [...prev, newClothes]);
+      
+      // Закрываем модальное окно загрузки
+      setShowModal(false);
+      
+      // Устанавливаем текущий предмет и открываем окно редактирования параметров
+      setCurrentClothesItem(newClothes);
+      setShowEditModal(true);
+      
+      // Сбрасываем форму
+      setNewItem({ name: '', image: '', file: null });
+
     } catch (error) {
       console.error("Error submitting item:", error);
+      alert('Произошла ошибка при загрузке. Пожалуйста, попробуйте снова.');
+    } finally {
       setClothesUploading(false);
     }
   };
-  
-  
 
+  // Функция обновления списка одежды после редактирования параметров
+  const handleEditSuccess = async () => {
+    try {
+      const storedUser = localStorage.getItem('user');
+      if (!storedUser) return;
+      
+      const parsedUser = JSON.parse(storedUser);
+      const userId = parsedUser.id as string;
+      
+      const clothesRes = await fetch(`/api/closet/clothes?userId=${userId}`);
+      const clothesData = await clothesRes.json();
+      setClothes(clothesData.clothes);
+    } catch (error) {
+      console.error("Failed to update closet data:", error);
+    }
+  };
 
   if (loading) {
     return (
@@ -119,39 +208,67 @@ export default function Closet() {
 
       <div className={styles.items}>
         {clothes.map((item) => (
-          <ItemAccount key={item.id} img={item.imageUrl} title={item.name} />
+          <ItemAccount 
+            key={item.id} 
+            id={item.id}
+            img={item.imageUrl} 
+            title={item.name} 
+            onClick={(id) => {
+              const selectedItem = clothes.find(item => item.id === id);
+              if (selectedItem) {
+                setCurrentClothesItem(selectedItem);
+                setShowEditModal(true);
+              }
+            }}
+          />
         ))}
       </div>
 
-      {/* Modal Window */}
+      {/* Modal Window for upload */}
       {showModal && (
-        <div className={styles.modalOverlay}>
+        <div className={styles.modalOverlay} onClick={handleModalOverlayClick}>
           <div className={styles.modalContent}>
-            <h2>Добавить предмет</h2>
-            <form onSubmit={handleSubmit}>
-            <label htmlFor="image">Название предмета</label>
-              <input 
-                type="text" 
-                name="name" 
-                placeholder="Футболка" 
-                value={newItem.name} 
-                onChange={handleInputChange} 
-                required 
-              />
-              <label htmlFor="file">Выберите изображение</label>
-              <input 
-                type="text" 
-                name="image" 
-                onChange={handleInputChange} 
-                required 
-              />
-              <button type="submit" className="authButton" disabled={ClothesUploading}>
-                        {ClothesUploading ? 'Загрузка...' : 'Добавить'}
-                    </button>
-              <button type="button" onClick={() => setShowModal(false)}>Закрыть</button>
-            </form>
+            {clothesUploading ? (
+              <div style={{ textAlign: 'center', padding: '20px 0' }}>
+                <div className={styles.loader} style={{ margin: '0 auto 20px' }}></div>
+                <p>Загрузка...</p>
+              </div>
+            ) : (
+              <div 
+                className={`${styles.dropZone} ${isDragging ? styles.active : ''}`}
+                onDragOver={handleDragOver}
+                onDragLeave={handleDragLeave}
+                onDrop={handleDrop}
+                onClick={openFileSelector}
+              >
+                <p className={styles.dropZoneTitle}>Добавить фото</p>
+                <p className={styles.fileFormats}>jpg, png, heic</p>
+                <input 
+                  ref={fileInputRef}
+                  type="file" 
+                  accept="image/*"
+                  style={{ display: 'none' }}
+                  onChange={handleFileInputChange} 
+                />
+              </div>
+            )}
           </div>
         </div>
+      )}
+
+      {/* Modal Window for editing clothes parameters */}
+      {showEditModal && currentClothesItem && (
+        <ClothesEditModal
+          isOpen={showEditModal}
+          onClose={() => setShowEditModal(false)}
+          imageUrl={currentClothesItem.imageUrl}
+          clothesId={currentClothesItem.id}
+          initialType={currentClothesItem.type || 'Футболка'}
+          initialColor={currentClothesItem.color || 'Синий'}
+          initialMaterial={currentClothesItem.material || 'Хлопок'}
+          initialSeason={currentClothesItem.season || 'Всесезонный'}
+          onSuccess={handleEditSuccess}
+        />
       )}
     </>
   );

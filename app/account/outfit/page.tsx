@@ -2,41 +2,82 @@
 
 import React, { useEffect, useState } from "react";
 import styles from "../closet/closet.module.css";
-import ItemAccount from "@/components/ItemAccount";
+import OutfitPreview from "@/components/OutfitPreview";
 import { useRouter } from 'next/navigation';
 import Image from "next/image";
 
+// Определяем типы данных
+interface ClothesItem {
+  id: number;
+  name: string;
+  imageUrl: string;
+}
+
+interface OutfitClothesItem {
+  id: number;
+  clothesId: number;
+  positionX: number;
+  positionY: number;
+  rotation: number;
+  clothes: ClothesItem;
+}
+
+interface OutfitData {
+  id: number;
+  name: string;
+  clothes: OutfitClothesItem[];
+  // Другие возможные поля
+  userId?: string | number;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
 export default function Closet() {
-  const [outfits, setOutfits] = useState<{ id: string; imageUrl: string; name: string }[]>([]);
+  const [outfits, setOutfits] = useState<OutfitData[]>([]);
   const [loading, setLoading] = useState(true); // Track loading state
   const router = useRouter();
 
-  useEffect(() => {
-    const fetchClosetData = async () => {
+const fetchClosetData = async () => {
       try {
         const storedUser = localStorage.getItem('user');
         if (storedUser) {
           const parsedUser = JSON.parse(storedUser);
           const userId = parsedUser.id;
 
-          // Fetch outfits
-          const outfitsRes = await fetch(`/api/closet/outfits?userId=${userId}`);
+          // Получаем список образов со всеми необходимыми данными
+          const outfitsRes = await fetch(`/api/outfits?userId=${userId}`);
+          
+          if (!outfitsRes.ok) {
+            throw new Error(`Ошибка получения данных: ${outfitsRes.status}`);
+          }
+          
           const outfitsData = await outfitsRes.json();
+          
+          // Устанавливаем полученные данные
           setOutfits(outfitsData.outfits);
-
-          // After fetching data, stop loading
-          setLoading(false);
-        } else {
-          router.push('/login');
         }
       } catch (error) {
         console.error("Failed to fetch closet data:", error);
-        setLoading(false); // Stop loading even on error
+      } finally {
+        // После загрузки данных или в случае ошибки, останавливаем индикатор загрузки
+        setLoading(false);
       }
     };
 
-    fetchClosetData();
-  }, [router]);
+  // Используем useRef вне useEffect для сохранения состояния между рендерами
+  const hasFetchedRef = React.useRef(false);
+  
+  useEffect(() => {
+    if (!hasFetchedRef.current) {
+      const fetchData = async () => {
+        await fetchClosetData();
+      };
+      
+      fetchData();
+      hasFetchedRef.current = true;
+    }
+    
+  }, []); // Пустой массив зависимостей - эффект выполнится один раз после монтирования
 
   // If loading, display loading spinner
   if (loading) {
@@ -55,7 +96,12 @@ export default function Closet() {
       </div>
       <div className={styles.items}>
         {outfits.map((outfit) => (
-          <ItemAccount key={outfit.id} img={outfit.imageUrl} title={outfit.name} />
+          <OutfitPreview 
+            key={outfit.id} 
+            outfitData={outfit}
+            title={outfit.name} 
+            navigationUrl={`/account/newOutfit?outfitId=${outfit.id}`}
+          />
         ))}
       </div>
     </>

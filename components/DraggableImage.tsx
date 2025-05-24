@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, MouseEvent } from "react";
 import Draggable from "react-draggable";
 
 interface DraggableImageProps {
@@ -18,6 +18,7 @@ const DraggableImage: React.FC<DraggableImageProps> = ({
 }) => {
   const [rotation, setRotation] = useState(0);
   const isDraggingRef = useRef(false);
+  const nodeRef = useRef(null); // Реф для элемента Draggable
 
   const handleDrag = () => {
     isDraggingRef.current = true;
@@ -34,16 +35,36 @@ const DraggableImage: React.FC<DraggableImageProps> = ({
     
     isDraggingRef.current = false;
   };
+  
+  const preventDragStart = (e: React.DragEvent) => {
+    e.preventDefault();
+  };
+
+  const handleMouseDown = (e: MouseEvent) => {
+    e.preventDefault(); // Предотвращаем стандартное поведение браузера
+  };
 
   return (
     <Draggable 
+      nodeRef={nodeRef}
       position={{ x: positionX, y: positionY }} 
       onDrag={handleDrag} 
       onStop={handleStop}
     >
-      <div style={{ transform: `rotate(${rotation}deg)`, position: 'absolute' }}>
-        <img src={src} alt={alt} style={{ width: '100px', height: '100px', objectFit: 'contain' }} />
-        <button style={{ cursor: 'move' }}>🔘</button>
+      <div ref={nodeRef} style={{ transform: `rotate(${rotation}deg)`, position: 'absolute' }}>
+        <img 
+          src={src} 
+          alt={alt} 
+          draggable="false"
+          onDragStart={preventDragStart}
+          onMouseDown={handleMouseDown}
+          style={{ 
+            width: '100px', 
+            height: '100px', 
+            objectFit: 'contain',
+            cursor: 'move' // Добавляем курсор "move" для изображения
+          }} 
+        />
       </div>
     </Draggable>
   );

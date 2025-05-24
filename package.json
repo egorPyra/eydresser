@@ -7,12 +7,22 @@
     "build": "next build",
     "postinstall": "prisma generate",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "db:generate": "prisma generate",
+    "db:push": "prisma db push",
+    "db:migrate": "prisma migrate dev",
+    "db:migrate:deploy": "prisma migrate deploy",
+    "db:migrate:reset": "prisma migrate reset",
+    "db:seed": "prisma db seed",
+    "db:studio": "prisma studio",
+    "db:setup": "prisma generate && prisma db push && prisma db seed"
   },
   "prisma": {
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.816.0",
+    "@aws-sdk/s3-request-presigner": "^3.816.0",
     "@prisma/client": "^5.20.0",
     "@react-three/drei": "^9.107.0",
     "@react-three/fiber": "^8.16.8",
@@ -25,6 +35,7 @@
     "gsap": "^3.12.5",
     "next": "^14.2.13",
     "next-auth": "^4.24.7",
+    "openai": "^4.103.0",
     "prisma": "^5.20.0",
     "react": "^18",
     "react-dom": "^18",
@@ -33,7 +44,8 @@
     "react-loading-skeleton": "^3.5.0",
     "sharp": "^0.33.4",
     "swr": "^2.2.5",
-    "three": "^0.165.0"
+    "three": "^0.165.0",
+    "uuid": "^11.1.0"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",

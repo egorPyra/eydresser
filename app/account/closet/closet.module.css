@@ -94,6 +94,7 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+    max-width: 450px;
 }
 
 .modalContent h2 {
@@ -146,5 +147,39 @@
 
 .modalContent button[type="button"] {
     background-color: #ccc;
+}
+
+.dropZone {
+    border: 2px dashed #ccc;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+}
+
+.dropZone.active {
+    border-color: #F0FF3D;
+    background-color: rgba(240, 255, 61, 0.1);
+}
+
+.dropZone p {
+    margin: 5px 0;
+    color: #777;
+}
+
+.dropZoneTitle {
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+.fileFormats {
+    color: #999;
+    font-size: 0.8rem;
 }
 

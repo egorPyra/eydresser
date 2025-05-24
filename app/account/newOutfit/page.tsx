@@ -1,16 +1,16 @@
 'use client';
 
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, Suspense } from "react";
 import styles from "../closet/closet.module.css";
 import "./add.css";
 import DraggableImage from "../../../components/DraggableImage";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Skeleton from "@/components/Skeleton";
 
 
 // Типы и интерфейсы
 interface ImageData {
-  id?: number;
+  id: number;
   src: string;
   alt: string;
   positionX: number;
@@ -18,19 +18,56 @@ interface ImageData {
 }
 
 interface ClothesItem {
-  id: string;
+  id: number;
   imageUrl: string;
   name: string;
   positionX: number;
   positionY: number;
 }
 
-export default function Closet() {
+interface OutfitClothes {
+  id: number;
+  clothesId: number;
+  positionX: number;
+  positionY: number;
+  rotation: number;
+  imageUrl?: string;
+  name?: string;
+}
+
+interface OutfitData {
+  id: number;
+  name: string;
+  userId: string;
+  clothes: OutfitClothes[];
+}
+
+// Компонент, использующий useSearchParams, обернутый в Suspense
+function OutfitCreator({ outfitId }: { outfitId: string | null }) {
   const [images, setImages] = useState<ImageData[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [clothes, setClothes] = useState<ClothesItem[]>([]);
   const router = useRouter();
+  const [outfitData, setOutfitData] = useState<OutfitData | null>(null);
   const [loading, setLoading] = useState(true);
+  const [dragActive, setDragActive] = useState(false);
+  const [isEditMode, setIsEditMode] = useState(false);
+
+  // Сбрасываем состояние при изменении outfitId
+  useEffect(() => {
+    // Если нет outfitId, значит мы создаем новый образ
+    if (!outfitId) {
+      setIsEditMode(false);
+      setOutfitData(null);
+      setImages([]);
+      
+      // Очищаем поле названия
+      const nameInput = document.getElementById('name') as HTMLInputElement;
+      if (nameInput) {
+        nameInput.value = '';
+      }
+    }
+  }, [outfitId]);
 
   const getUserId = () => {
     const storedUser = localStorage.getItem('user');
@@ -53,9 +90,53 @@ export default function Closet() {
         const parsedUser = JSON.parse(storedUser);
         const userId = parsedUser.id as string;
 
+        // Получаем данные гардероба
         const clothesRes = await fetch(`/api/closet/clothes?userId=${userId}`);
         const clothesData = await clothesRes.json();
         setClothes(clothesData.clothes);
+        
+        // Если есть outfitId, загружаем данные аутфита
+        if (outfitId) {
+          setIsEditMode(true);
+          try {
+            const outfitRes = await fetch(`/api/outfits/${outfitId}`);
+            if (!outfitRes.ok) {
+              throw new Error('Не удалось загрузить данные образа');
+            }
+            
+            const outfitData = await outfitRes.json();
+            setOutfitData(outfitData);
+            
+            // Заполнение поля названия
+            const nameInput = document.getElementById('name') as HTMLInputElement;
+            if (nameInput) {
+              nameInput.value = outfitData.name;
+            }
+            
+            // Загружаем изображения аутфита
+            if (outfitData.clothes && outfitData.clothes.length > 0) {
+              // Находим подробную информацию о каждой одежде из аутфита в общем списке одежды
+              const outfitImages: ImageData[] = outfitData.clothes.map((outfitItem: OutfitClothes) => {
+                // Находим полные данные о предмете одежды для получения URL изображения и названия
+                const fullItemData = clothesData.clothes.find((item: ClothesItem) => item.id === outfitItem.clothesId);
+                
+                return {
+                  id: outfitItem.clothesId,
+                  src: fullItemData?.imageUrl || '',
+                  alt: fullItemData?.name || '',
+                  positionX: outfitItem.positionX,
+                  positionY: outfitItem.positionY
+                };
+              });
+              
+              setImages(outfitImages);
+            }
+          } catch (error) {
+            console.error("Failed to fetch outfit data:", error);
+            alert("Не удалось загрузить данные образа");
+          }
+        }
+        
         setLoading(false);
       } catch (error) {
         console.error("Failed to fetch closet data:", error);
@@ -64,24 +145,84 @@ export default function Closet() {
     };
 
     fetchClosetData();
-  }, [router]);
+  }, [router, outfitId]);
 
   // Функция для загрузки изображений
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
-      const reader = new FileReader();
-      reader.onload = (event: ProgressEvent<FileReader>) => {
-        const result = event.target?.result;
-        if (result) {
-          setImages((prevImages) => [
-            ...prevImages,
-            { id: prevImages.length, src: result as string, alt: `uploaded ${prevImages.length}`, positionX: 0, positionY: 0 }
-          ]);
+      const formData = new FormData();
+      formData.append('image', file);
+      
+      const userId = getUserId();
+      if (!userId) {
+        alert("Пожалуйста, войдите в систему для загрузки изображений");
+        return;
+      }
+      
+      formData.append('userId', userId.toString());
+      
+      try {
+        // Изменяем текст на "Загрузка..."
+        const uploadLabel = document.querySelector('.addFromDevice p');
+        const originalText = uploadLabel ? uploadLabel.textContent : "Добавить с компьютера";
+        if (uploadLabel) uploadLabel.textContent = "Загрузка...";
+        
+        // Отправляем изображение на сервер
+        const response = await fetch(`/api/closet/add`, {
+          method: 'POST',
+          body: formData
+        });
+        
+        if (!response.ok) {
+          throw new Error('Ошибка при загрузке изображения');
         }
-      };
-      reader.readAsDataURL(file);
-      console.log(file);
+        
+        const data = await response.json();
+        const newClothes = data.newClothes;
+        
+        // Добавляем новую одежду в массив clothes
+        setClothes(prevClothes => [...prevClothes, newClothes]);
+        
+        // Возвращаем оригинальный текст
+        if (uploadLabel) uploadLabel.textContent = originalText;
+      } catch (error) {
+        console.error("Ошибка при загрузке изображения:", error);
+        alert("Произошла ошибка при загрузке изображения");
+        // Возвращаем оригинальный текст
+        const uploadLabel = document.querySelector('.addFromDevice p');
+        const originalText = uploadLabel ? uploadLabel.textContent : "Добавить с компьютера";
+        if (uploadLabel) uploadLabel.textContent = "Добавить с компьютера";
+      }
+    }
+  };
+
+  // Функция для обработки перетаскивания файлов
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setDragActive(true);
+  };
+  
+  const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setDragActive(false);
+  };
+
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setDragActive(false);
+    
+    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+      const fileInput = fileInputRef.current;
+      if (fileInput) {
+        // @ts-ignore: Объект имеет свойство files
+        fileInput.files = e.dataTransfer.files;
+        const event = new Event('change', { bubbles: true });
+        fileInput.dispatchEvent(event);
+      }
     }
   };
 
@@ -95,12 +236,12 @@ export default function Closet() {
   const handleSaveData = async () => {
     // Ensure you are correctly mapping the images to include position and rotation
     const dataToSave = images.map((image) => ({
-      imageUrl: image.src,
-      name: image.alt, 
+      id: image.id,
       positionX: image.positionX, 
       positionY: image.positionY, 
       rotation: 0 
     }));
+    console.log("Data to save:", dataToSave);
   
     const nameInput = document.getElementById('name') as HTMLInputElement;
     const name = nameInput?.value;
@@ -113,22 +254,35 @@ export default function Closet() {
     }
   
     try {
-      const res = await fetch('/api/closet/outfits', {
-        method: 'POST',
+      // Если это режим редактирования, используем PUT запрос
+      const method = isEditMode ? 'PUT' : 'POST';
+      const url = isEditMode 
+        ? `/api/outfits/${outfitId}` 
+        : '/api/closet/outfits';
+        
+      const res = await fetch(url, {
+        method,
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           name,
-          clothes: {
-            create: dataToSave // Use the modified dataToSave here
-          },
+          clothes: dataToSave,
           userId
         }),
       });
   
       if (res.ok) {
-        alert("Образ успешно сохранен!");
+        const message = isEditMode ? "Образ успешно обновлен!" : "Образ успешно сохранен!";
+        alert(message);
+        
+        // Если это новый образ (не режим редактирования), получаем ID нового образа и переходим к его редактированию
+        if (!isEditMode) {
+          const data = await res.json();
+          if (data && data.outfit.id) {
+            router.push(`/account/newOutfit?outfitId=${data.outfit.id}`);
+          }
+        }
       } else {
         const errorData = await res.json();
         alert(`Ошибка при сохранении: ${errorData.error}`);
@@ -138,14 +292,12 @@ export default function Closet() {
       alert("Произошла ошибка при сохранении данных.");
     }
   };
-  
-
 
 
   return (
     <div>
       <div className={styles.header}>
-        <h2>Создать образ</h2>
+        <h2>{isEditMode ? "Редактировать образ" : "Создать образ"}</h2>
       </div>
       <div className="content">
         <div className="greyZone">
@@ -171,7 +323,13 @@ export default function Closet() {
         </div>
 
         <div className="tools">
-          <div className="addFromDevice" onClick={handleClick}>
+          <div 
+            className={`addFromDevice ${dragActive ? 'dragActive' : ''}`}
+            onClick={handleClick}
+            onDragOver={handleDragOver}
+            onDragLeave={handleDragLeave}
+            onDrop={handleDrop}
+          >
             <p>Добавить с компьютера</p>
             <span>jpg, png, heic</span>
             <input
@@ -183,15 +341,13 @@ export default function Closet() {
             />
           </div>
 
-          <p style={{ padding: '10px' }}> Для перемещения удерживайте 🔘 </p>
-
           {/* Блок Вещи из гардероба */}
           <div className="closetItems">
             <h3>Вещи из гардероба:</h3>
             <div className="itemsGrid">
               {loading
                 ? [...Array(6)].map((_, index) => <Skeleton key={index} />) // Пока загружается, показываем 6 скелетонов
-                : clothes.slice(0, 6).map((item) => (
+                : clothes.map((item) => (
                   <div key={item.id} className="closetItem">
                     <img
                       src={item.imageUrl}
@@ -200,7 +356,7 @@ export default function Closet() {
                       onClick={() => {
                         setImages((prevImages) => [
                           ...prevImages,
-                          { id: images.length, src: item.imageUrl, alt: item.name, positionX: 0, positionY: 0 }
+                          { id: item.id, src: item.imageUrl, alt: item.name, positionX: 0, positionY: 0 }
                         ]);
                       }}
                     />
@@ -218,4 +374,23 @@ export default function Closet() {
       </div>
     </div>
   );
+}
+
+// Основной компонент, который экспортируется по умолчанию
+export default function Closet() {
+  return (
+    <Suspense fallback={<div className="loading">Загрузка...</div>}>
+      <ClientOutfitCreator />
+    </Suspense>
+  );
+}
+
+// Компонент-обертка для использования useSearchParams
+function ClientOutfitCreator() {
+  const searchParams = useSearchParams();
+  // Используем outfitId как ключ для OutfitCreator, чтобы компонент пересоздавался при изменении параметров
+  const outfitIdParam = searchParams ? searchParams.get('outfitId') : null;
+  const key = outfitIdParam || 'new';
+
+  return <OutfitCreator key={key} outfitId={outfitIdParam} />;
 }
