@@ -1,0 +1,85 @@
+.item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 20vw;
+  height: 22vw;
+  background-color: #F5F5F5;
+  border-radius: var(--border-radius);
+  padding: 1rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  min-width: 200px;
+  min-height: 220px;
+}
+
+.item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.previewContainer {
+  width: 95%;
+  height: 80%;
+  position: relative;
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.previewZone {
+  width: 100%;
+  height: 100%;
+  background-color: #e0e0e0;
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--border-radius);
+  transform-origin: center center;
+}
+
+.clothesPreviewItem {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  z-index: 1;
+  transform-origin: center center;
+  margin-left: -20px;
+  margin-top: -20px;
+}
+
+.clothesPreviewImage {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transform-origin: center center;
+}
+
+.item h3 {
+  margin-top: 1rem;
+  margin-left: 0.5rem;
+  text-align: left;
+  align-items: flex-start;
+}
+
+.loading {
+  width: 30px;
+  aspect-ratio: .75;
+  --c: no-repeat linear-gradient(#000 0 0);
+  background:
+    var(--c) 0% 100%,
+    var(--c) 50% 100%,
+    var(--c) 100% 100%;
+  background-size: 20% 65%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  animation: previewLoading 1s infinite linear;
+}
+
+@keyframes previewLoading {
+  20% { background-position: 0% 50%, 50% 100%, 100% 100%; }
+  40% { background-position: 0% 0%, 50% 50%, 100% 100%; }
+  60% { background-position: 0% 100%, 50% 0%, 100% 50%; }
+  80% { background-position: 0% 100%, 50% 100%, 100% 0%; }
+}

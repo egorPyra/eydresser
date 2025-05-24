@@ -43,18 +43,31 @@ interface OutfitData {
 }
 
 // Компонент, использующий useSearchParams, обернутый в Suspense
-function OutfitCreator() {
+function OutfitCreator({ outfitId }: { outfitId: string | null }) {
   const [images, setImages] = useState<ImageData[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [clothes, setClothes] = useState<ClothesItem[]>([]);
   const router = useRouter();
-  const searchParams = useSearchParams();
   const [outfitData, setOutfitData] = useState<OutfitData | null>(null);
   const [loading, setLoading] = useState(true);
   const [dragActive, setDragActive] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
-  
-  const outfitId = searchParams ? searchParams.get('outfitId') : null;
+
+  // Сбрасываем состояние при изменении outfitId
+  useEffect(() => {
+    // Если нет outfitId, значит мы создаем новый образ
+    if (!outfitId) {
+      setIsEditMode(false);
+      setOutfitData(null);
+      setImages([]);
+      
+      // Очищаем поле названия
+      const nameInput = document.getElementById('name') as HTMLInputElement;
+      if (nameInput) {
+        nameInput.value = '';
+      }
+    }
+  }, [outfitId]);
 
   const getUserId = () => {
     const storedUser = localStorage.getItem('user');
@@ -262,6 +275,14 @@ function OutfitCreator() {
       if (res.ok) {
         const message = isEditMode ? "Образ успешно обновлен!" : "Образ успешно сохранен!";
         alert(message);
+        
+        // Если это новый образ (не режим редактирования), получаем ID нового образа и переходим к его редактированию
+        if (!isEditMode) {
+          const data = await res.json();
+          if (data && data.outfit.id) {
+            router.push(`/account/newOutfit?outfitId=${data.outfit.id}`);
+          }
+        }
       } else {
         const errorData = await res.json();
         alert(`Ошибка при сохранении: ${errorData.error}`);
@@ -359,7 +380,17 @@ function OutfitCreator() {
 export default function Closet() {
   return (
     <Suspense fallback={<div className="loading">Загрузка...</div>}>
-      <OutfitCreator />
+      <ClientOutfitCreator />
     </Suspense>
   );
+}
+
+// Компонент-обертка для использования useSearchParams
+function ClientOutfitCreator() {
+  const searchParams = useSearchParams();
+  // Используем outfitId как ключ для OutfitCreator, чтобы компонент пересоздавался при изменении параметров
+  const outfitIdParam = searchParams ? searchParams.get('outfitId') : null;
+  const key = outfitIdParam || 'new';
+
+  return <OutfitCreator key={key} outfitId={outfitIdParam} />;
 }
