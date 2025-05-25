@@ -1,9 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { uploadBufferToS3 } from '../../../tools';
 
-export const config = {
-  runtime: 'nodejs',
-};
+export const runtime = 'nodejs';
+
 
 export async function POST(req: NextRequest) {
   try {
