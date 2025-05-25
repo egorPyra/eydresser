@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { uploadBufferToS3 } from '../../../tools';
 
-export const routeSegmentConfig = {
+export const config = {
   runtime: 'nodejs',
 };
 
