@@ -28,10 +28,10 @@ model Clothes {
     name     String
     imageUrl String?
     
-    type     String
-    color    String
-    material String
-    season   String
+    type     String?
+    color    String?
+    material String?
+    season   String?
 
     userId Int
     user   User @relation(fields: [userId], references: [id])

@@ -212,7 +212,7 @@ export default function Closet() {
             key={item.id} 
             id={item.id}
             img={item.imageUrl} 
-            title={item.name} 
+            title={item.type ?? 'вещь'} 
             onClick={(id) => {
               const selectedItem = clothes.find(item => item.id === id);
               if (selectedItem) {

@@ -1,10 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { uploadBufferToS3 } from '../../../tools';
 
-export const config = {
-  api: {
-    bodyParser: false,  // Отключаем встроенный парсер для обработки FormData
-  },
+export const routeSegmentConfig = {
+  runtime: 'nodejs',
 };
 
 export async function POST(req: NextRequest) {
