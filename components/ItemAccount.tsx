@@ -32,10 +32,10 @@ export default function ItemAccount({
     <div className={styles.item} onClick={handleClick}>
         {img && (
           <div className={styles.imgWrapper}>
-            <Image src={img} layout="fill" objectPosition="contain" alt="item image" />
+            <Image className={styles.itemImg} src={img} fill style={{objectFit: 'contain'}} alt="item image" />
           </div>
         )}
-        <h3>{title}</h3>
+        {/* <h3>{title}</h3> */}
     </div>
   );
 }

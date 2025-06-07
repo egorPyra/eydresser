@@ -3,18 +3,18 @@
 import React, { useState } from 'react';
 import styles from '../closet/closet.module.css';
 import './settings.css';
-import toast, { Toaster } from 'react-hot-toast';  
+import toast, { Toaster } from 'react-hot-toast';
 import bcrypt from 'bcryptjs';
 
 export default function Settings() {
   const [formData, setFormData] = useState({
     name: 'Егор',   // Default values
     email: 'test@mail.ru',
-    password: '',   
+    password: '',
     confirmPassword: ''
   });
 
-  const [loading, setLoading] = useState(false);  
+  const [loading, setLoading] = useState(false);
 
   // Handle input changes
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -40,7 +40,7 @@ export default function Settings() {
 
     try {
       let hashedPassword;
-      
+
       if (password) {
         hashedPassword = await bcrypt.hash(password, 10);
       }
@@ -85,9 +85,9 @@ export default function Settings() {
       <Toaster position="bottom-center" />
 
       <div className={styles.header}>
-        <h2>Настройки</h2>
+        <h3>Настройки</h3>
       </div>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className='authForm'>
         <label htmlFor="name" className="authLabel"><h6>Имя</h6></label>
         <input
           id="name"

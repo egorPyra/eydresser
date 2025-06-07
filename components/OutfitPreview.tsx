@@ -39,6 +39,7 @@ const OutfitPreview = ({
   outfitData: OutfitItem | null;
 }) => {
   const router = useRouter();
+  const previewScale = 0.46;
 
   const handleClick = () => {
     if (navigationUrl) {
@@ -55,9 +56,9 @@ const OutfitPreview = ({
               key={clothesItem.id}
               className={styles.clothesPreviewItem}
               style={{
-                left: `calc(30% + ${clothesItem.positionX * 0.15}px)`,
-                top: `calc(30% + ${clothesItem.positionY * 0.15}px)`,
-                transform: `rotate(${clothesItem.rotation}deg)`
+                left: `${10 + clothesItem.positionX * previewScale}px`,
+                top: `${10 + clothesItem.positionY * previewScale}px`,
+                transform: `rotate(${clothesItem.rotation}deg)`,
               }}
             >
               <img 

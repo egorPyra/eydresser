@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useEffect, useState } from "react";
-import styles from "../closet/closet.module.css";
+import styles from "./outfit.module.css";
 import OutfitPreview from "@/components/OutfitPreview";
 import { useRouter } from 'next/navigation';
 import Image from "next/image";
@@ -84,7 +84,7 @@ const fetchClosetData = async () => {
     return (
       <div style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center', height: '100vh' }}>
         <div className={styles.loader}></div>
-        <h2>Loading...</h2>
+        <h3>Loading...</h3>
       </div>
     );
   }
@@ -92,7 +92,7 @@ const fetchClosetData = async () => {
   return (
     <>
       <div className={styles.header}>
-        <h2>Образы</h2>
+        <h3>Образы</h3>
       </div>
       <div className={styles.items}>
         {outfits.map((outfit) => (

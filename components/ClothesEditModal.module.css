@@ -15,8 +15,8 @@
   background-color: white;
   border-radius: 10px;
   width: 90%;
-  max-width: 500px;
-  padding: 20px;
+  max-width: 450px;
+  padding: 40px 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -24,10 +24,11 @@
 }
 
 .imageContainer {
-  margin-bottom: 20px;
-  width: 200px;
-  height: 200px;
+  margin-bottom: 40px;
+  width: 300px;
+  height: 300px;
   position: relative;
+  object-fit: contain;
 }
 
 .clothesImage {
@@ -35,6 +36,8 @@
   height: 100%;
   object-fit: cover;
   border-radius: 5px;
+  object-fit: contain;
+
 }
 
 .paramsContainer {
@@ -42,14 +45,23 @@
 }
 
 .paramItem {
-  margin-bottom: 15px;
+  margin-bottom: 25px;
+  position: relative;
 }
 
 .paramItem label {
+  position: absolute;
+  top: -12px;
+  left: 10px;
+  background: #fff;
+  padding: 5px 10px;
+  border-radius: 5px;
   display: block;
-  font-weight: 500;
+  font-family: 'Raleway', sans-serif;
+  font-weight: 400;
+  font-size: 0.7rem;
   margin-bottom: 5px;
-  color: #333;
+  color: #001613;
 }
 
 .inputField {
@@ -61,9 +73,14 @@
 }
 
 .saveButton {
+  width: 120px;
+  height: 40px;
   margin-top: 20px;
   padding: 10px 30px;
-  background-color: #4dabf7;
+  background-color: #990000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   color: white;
   border: none;
   border-radius: 5px;
@@ -73,10 +90,36 @@
 }
 
 .saveButton:hover {
-  background-color: #339af0;
+  background-color: #6f0707;
 }
 
 .saveButton:disabled {
-  background-color: #a5d8ff;
+  background-color: #dc2222;
+  cursor: not-allowed;
+}
+
+.deleteButton {
+  width: 120px;
+  height: 40px;
+  margin-top: 20px;
+  padding: 10px 30px;
+  background-color: #e4e4e4;
+  color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.deleteButton:hover {
+  background-color: #c8c8c8;
+}
+
+.deleteButton:disabled {
+  background-color: #fcfcfc;
   cursor: not-allowed;
 }

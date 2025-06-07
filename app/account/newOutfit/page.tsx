@@ -1,11 +1,13 @@
 'use client';
 
 import React, { useState, useRef, useEffect, Suspense } from "react";
-import styles from "../closet/closet.module.css";
+import styles from "./newOutfit.module.css";
 import "./add.css";
 import DraggableImage from "../../../components/DraggableImage";
 import { useRouter, useSearchParams } from "next/navigation";
 import Skeleton from "@/components/Skeleton";
+import toast from 'react-hot-toast';
+
 
 
 // Типы и интерфейсы
@@ -52,6 +54,13 @@ function OutfitCreator({ outfitId }: { outfitId: string | null }) {
   const [loading, setLoading] = useState(true);
   const [dragActive, setDragActive] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
+  const [aiPrompt, setAiPrompt] = useState("");
+  const [isPromptVisible, setPromptVisible] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [isGenerating, setIsGenerating] = useState(false);
+
+
+
 
   // Сбрасываем состояние при изменении outfitId
   useEffect(() => {
@@ -60,7 +69,7 @@ function OutfitCreator({ outfitId }: { outfitId: string | null }) {
       setIsEditMode(false);
       setOutfitData(null);
       setImages([]);
-      
+
       // Очищаем поле названия
       const nameInput = document.getElementById('name') as HTMLInputElement;
       if (nameInput) {
@@ -94,7 +103,7 @@ function OutfitCreator({ outfitId }: { outfitId: string | null }) {
         const clothesRes = await fetch(`/api/closet/clothes?userId=${userId}`);
         const clothesData = await clothesRes.json();
         setClothes(clothesData.clothes);
-        
+
         // Если есть outfitId, загружаем данные аутфита
         if (outfitId) {
           setIsEditMode(true);
@@ -103,23 +112,23 @@ function OutfitCreator({ outfitId }: { outfitId: string | null }) {
             if (!outfitRes.ok) {
               throw new Error('Не удалось загрузить данные образа');
             }
-            
+
             const outfitData = await outfitRes.json();
             setOutfitData(outfitData);
-            
+
             // Заполнение поля названия
             const nameInput = document.getElementById('name') as HTMLInputElement;
             if (nameInput) {
               nameInput.value = outfitData.name;
             }
-            
+
             // Загружаем изображения аутфита
             if (outfitData.clothes && outfitData.clothes.length > 0) {
               // Находим подробную информацию о каждой одежде из аутфита в общем списке одежды
               const outfitImages: ImageData[] = outfitData.clothes.map((outfitItem: OutfitClothes) => {
                 // Находим полные данные о предмете одежды для получения URL изображения и названия
                 const fullItemData = clothesData.clothes.find((item: ClothesItem) => item.id === outfitItem.clothesId);
-                
+
                 return {
                   id: outfitItem.clothesId,
                   src: fullItemData?.imageUrl || '',
@@ -128,15 +137,15 @@ function OutfitCreator({ outfitId }: { outfitId: string | null }) {
                   positionY: outfitItem.positionY
                 };
               });
-              
+
               setImages(outfitImages);
             }
           } catch (error) {
             console.error("Failed to fetch outfit data:", error);
-            alert("Не удалось загрузить данные образа");
+            toast.error("Не удалось загрузить данные образа");
           }
         }
-        
+
         setLoading(false);
       } catch (error) {
         console.error("Failed to fetch closet data:", error);
@@ -153,42 +162,42 @@ function OutfitCreator({ outfitId }: { outfitId: string | null }) {
       const file = e.target.files[0];
       const formData = new FormData();
       formData.append('image', file);
-      
+
       const userId = getUserId();
       if (!userId) {
-        alert("Пожалуйста, войдите в систему для загрузки изображений");
+        toast.error("Пожалуйста, войдите в систему для загрузки изображений");
         return;
       }
-      
+
       formData.append('userId', userId.toString());
-      
+
       try {
         // Изменяем текст на "Загрузка..."
         const uploadLabel = document.querySelector('.addFromDevice p');
         const originalText = uploadLabel ? uploadLabel.textContent : "Добавить с компьютера";
         if (uploadLabel) uploadLabel.textContent = "Загрузка...";
-        
+
         // Отправляем изображение на сервер
         const response = await fetch(`/api/closet/add`, {
           method: 'POST',
           body: formData
         });
-        
+
         if (!response.ok) {
           throw new Error('Ошибка при загрузке изображения');
         }
-        
+
         const data = await response.json();
         const newClothes = data.newClothes;
-        
+
         // Добавляем новую одежду в массив clothes
         setClothes(prevClothes => [...prevClothes, newClothes]);
-        
+
         // Возвращаем оригинальный текст
         if (uploadLabel) uploadLabel.textContent = originalText;
       } catch (error) {
         console.error("Ошибка при загрузке изображения:", error);
-        alert("Произошла ошибка при загрузке изображения");
+        toast.error("Произошла ошибка при загрузке изображения");
         // Возвращаем оригинальный текст
         const uploadLabel = document.querySelector('.addFromDevice p');
         const originalText = uploadLabel ? uploadLabel.textContent : "Добавить с компьютера";
@@ -203,7 +212,7 @@ function OutfitCreator({ outfitId }: { outfitId: string | null }) {
     e.stopPropagation();
     setDragActive(true);
   };
-  
+
   const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     e.stopPropagation();
@@ -214,7 +223,7 @@ function OutfitCreator({ outfitId }: { outfitId: string | null }) {
     e.preventDefault();
     e.stopPropagation();
     setDragActive(false);
-    
+
     if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
       const fileInput = fileInputRef.current;
       if (fileInput) {
@@ -234,32 +243,34 @@ function OutfitCreator({ outfitId }: { outfitId: string | null }) {
   };
 
   const handleSaveData = async () => {
+    setIsSaving(true);
     // Ensure you are correctly mapping the images to include position and rotation
     const dataToSave = images.map((image) => ({
       id: image.id,
-      positionX: image.positionX, 
-      positionY: image.positionY, 
-      rotation: 0 
+      positionX: image.positionX,
+      positionY: image.positionY,
+      rotation: 0
     }));
     console.log("Data to save:", dataToSave);
-  
+
     const nameInput = document.getElementById('name') as HTMLInputElement;
     const name = nameInput?.value;
-  
+
     const userId = getUserId();
-  
+
     if (!name || !userId) {
-      alert("Пожалуйста, введите название и убедитесь, что вы вошли в систему.");
+      toast.error("Пожалуйста, введите название образа.");
+      setIsSaving(false);
       return;
     }
-  
+
     try {
       // Если это режим редактирования, используем PUT запрос
       const method = isEditMode ? 'PUT' : 'POST';
-      const url = isEditMode 
-        ? `/api/outfits/${outfitId}` 
+      const url = isEditMode
+        ? `/api/outfits/${outfitId}`
         : '/api/closet/outfits';
-        
+
       const res = await fetch(url, {
         method,
         headers: {
@@ -271,11 +282,12 @@ function OutfitCreator({ outfitId }: { outfitId: string | null }) {
           userId
         }),
       });
-  
+
       if (res.ok) {
         const message = isEditMode ? "Образ успешно обновлен!" : "Образ успешно сохранен!";
-        alert(message);
-        
+        setIsSaving(false);
+        toast.success(message);
+
         // Если это новый образ (не режим редактирования), получаем ID нового образа и переходим к его редактированию
         if (!isEditMode) {
           const data = await res.json();
@@ -285,19 +297,69 @@ function OutfitCreator({ outfitId }: { outfitId: string | null }) {
         }
       } else {
         const errorData = await res.json();
-        alert(`Ошибка при сохранении: ${errorData.error}`);
+        toast.error(`Ошибка при сохранении: ${errorData.error}`);
+        setIsSaving(false);
       }
     } catch (error) {
       console.error("Error saving data:", error);
-      alert("Произошла ошибка при сохранении данных.");
+      toast.error("Произошла ошибка при сохранении данных.");
+      setIsSaving(false);
     }
   };
+
+  const handleCreateWithAI = async () => {
+    setIsGenerating(true);
+    const userId = getUserId();
+    if (!userId || !aiPrompt.trim()) {
+      toast.error("Введите сначала запрос.");
+      return;
+    }
+
+    try {
+      const res = await fetch("/api/generate-outfit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId, prompt: aiPrompt })
+      });
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Ошибка генерации");
+      const { images, advice } = data;
+
+      const imagesFromAI = data.images.map((item: any) => ({
+        id: item.id,
+        src: item.imageUrl,
+        alt: item.name,
+        positionX: item.positionX,
+        positionY: item.positionY
+      }));
+
+      setImages(imagesFromAI);
+      setPromptVisible(false);
+      setAiPrompt("");
+
+      if (advice && advice.trim() !== "") {
+        toast.custom((t) => (
+          <div className="bg-white shadow-lg rounded-lg px-4 py-3 text-sm text-gray-800 max-w-md border-l-4 border-blue-500">
+            💡 <b>Совет:</b> {advice}
+          </div>
+        ));
+      }
+
+    } catch (err) {
+      console.error(err);
+      toast.error("Ошибка при генерации образа с ИИ.");
+    } finally {
+      setIsGenerating(false);
+    }
+  };
+
 
 
   return (
     <div>
       <div className={styles.header}>
-        <h2>{isEditMode ? "Редактировать образ" : "Создать образ"}</h2>
+        <h3>{isEditMode ? "Редактировать образ" : "Создать образ"}</h3>
       </div>
       <div className="content">
         <div className="greyZone">
@@ -323,7 +385,9 @@ function OutfitCreator({ outfitId }: { outfitId: string | null }) {
         </div>
 
         <div className="tools">
-          <div 
+          <input id="name" name="name" className="authInput" placeholder="Название образа" />
+
+          <div
             className={`addFromDevice ${dragActive ? 'dragActive' : ''}`}
             onClick={handleClick}
             onDragOver={handleDragOver}
@@ -343,10 +407,10 @@ function OutfitCreator({ outfitId }: { outfitId: string | null }) {
 
           {/* Блок Вещи из гардероба */}
           <div className="closetItems">
-            <h3>Вещи из гардероба:</h3>
+            {/* <h3>Вещи из гардероба:</h3> */}
             <div className="itemsGrid">
               {loading
-                ? [...Array(6)].map((_, index) => <Skeleton key={index} />) // Пока загружается, показываем 6 скелетонов
+                ? [...Array(9)].map((_, index) => <Skeleton key={index} />) // Пока загружается, показываем 6 скелетонов
                 : clothes.map((item) => (
                   <div key={item.id} className="closetItem">
                     <img
@@ -365,13 +429,39 @@ function OutfitCreator({ outfitId }: { outfitId: string | null }) {
             </div>
           </div>
 
-          <label htmlFor="name" className="authLabel">
-            <h6>Название</h6>
-          </label>
-          <input id="name" name="name" className="authInput" placeholder="Название" />
-          <button type="submit" className="authButton" onClick={handleSaveData}>Сохранить</button>
+          <div className="buttons">
+            <div className={`aiButtonGroup ${isPromptVisible ? 'expanded' : ''}`}>
+              <input
+                type="text"
+                className="aiInput"
+                placeholder="Что вы хотите надеть?"
+                value={aiPrompt}
+                onChange={(e) => setAiPrompt(e.target.value)}
+              />
+              <button
+                type="button"
+                className="aiButton"
+                onClick={isPromptVisible ? handleCreateWithAI : () => setPromptVisible(true)}
+                disabled={isGenerating}
+              >
+                {isPromptVisible ? (
+                  isGenerating ? <div className="loader" /> : '✨'
+                ) : (
+                  'Создать с ИИ'
+                )}
+              </button>
+
+            </div>
+
+            <button type="submit" className="authButton" onClick={handleSaveData} disabled={isSaving}>
+              {isSaving ? <div className="loader" /> : <img src="/save.svg" alt="save" />}
+            </button>
+          </div>
+
+
         </div>
       </div>
+
     </div>
   );
 }

@@ -6,6 +6,7 @@ import "./add.css";
 import Image from "next/image";
 import DraggableImage from "@/components/DraggableImage";
 import gsap from "gsap";
+import toast from "react-hot-toast";
 
 
 
@@ -77,10 +78,10 @@ export default function Closet() {
     try {
       const jsonData = JSON.stringify(dataToSave, null, 2);
       localStorage.setItem("savedData", jsonData);
-      alert("Данные сохранены!");
+      toast.success("Данные сохранены!");
     } catch (error) {
       console.error("Error saving data:", error);
-      alert("Произошла ошибка при сохранении данных.");
+      toast.error("Произошла ошибка при сохранении данных.");
     }
   };
 

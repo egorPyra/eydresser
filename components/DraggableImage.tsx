@@ -25,17 +25,21 @@ const DraggableImage: React.FC<DraggableImageProps> = ({
   };
 
   const handleStop = (e: any, data: any) => {
-    // Update position based on the current position of the image
-    onPositionChange(data.x, data.y);
+    const boundedX = Math.max(0, Math.min(440, data.x));
+    const boundedY = Math.max(0, Math.min(440, data.y));
 
-    // Rotate the image if it was not dragged
+    onPositionChange(boundedX, boundedY);
+    console.log(boundedX, boundedY);
+
     if (!isDraggingRef.current) {
       setRotation((prevRotation) => (prevRotation + 90) % 360);
     }
-    
+
     isDraggingRef.current = false;
   };
-  
+
+
+
   const preventDragStart = (e: React.DragEvent) => {
     e.preventDefault();
   };
@@ -45,25 +49,25 @@ const DraggableImage: React.FC<DraggableImageProps> = ({
   };
 
   return (
-    <Draggable 
+    <Draggable
       nodeRef={nodeRef}
-      position={{ x: positionX, y: positionY }} 
-      onDrag={handleDrag} 
+      position={{ x: positionX, y: positionY }}
+      onDrag={handleDrag}
       onStop={handleStop}
     >
       <div ref={nodeRef} style={{ transform: `rotate(${rotation}deg)`, position: 'absolute' }}>
-        <img 
-          src={src} 
-          alt={alt} 
+        <img
+          src={src}
+          alt={alt}
           draggable="false"
           onDragStart={preventDragStart}
           onMouseDown={handleMouseDown}
-          style={{ 
-            width: '100px', 
-            height: '100px', 
+          style={{
+            width: '100px',
+            height: '100px',
             objectFit: 'contain',
             cursor: 'move' // Добавляем курсор "move" для изображения
-          }} 
+          }}
         />
       </div>
     </Draggable>

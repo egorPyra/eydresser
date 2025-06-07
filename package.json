@@ -21,24 +21,24 @@
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
   },
   "dependencies": {
+    "20": "^3.1.9",
     "@aws-sdk/client-s3": "^3.816.0",
     "@aws-sdk/s3-request-presigner": "^3.816.0",
-    "@prisma/client": "^5.20.0",
     "@react-three/drei": "^9.107.0",
     "@react-three/fiber": "^8.16.8",
     "@types/bcrypt": "^5.0.2",
     "axios": "^1.7.2",
     "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
+    "event-target-shim": "^6.0.2",
     "gsap": "^3.12.5",
     "next": "^14.2.13",
     "next-auth": "^4.24.7",
     "openai": "^4.103.0",
-    "prisma": "^5.20.0",
     "react": "^18",
     "react-dom": "^18",
     "react-draggable": "^4.4.6",
-    "react-hot-toast": "^2.4.1",
+    "react-hot-toast": "^2.5.2",
     "react-loading-skeleton": "^3.5.0",
     "sharp": "^0.33.4",
     "swr": "^2.2.5",
@@ -46,11 +46,13 @@
     "uuid": "^11.1.0"
   },
   "devDependencies": {
+    "@prisma/client": "^6.8.2",
     "@types/bcryptjs": "^2.4.6",
-    "@types/node": "^20.16.10",
+    "@types/node": "^20.17.51",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@types/uuid": "^10.0.0",
+    "prisma": "^6.8.2",
     "ts-node": "^10.9.2",
     "typescript": "^5.6.2"
   }

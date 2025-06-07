@@ -3,6 +3,8 @@
 import React, { useEffect, useState } from "react";
 import styles from "./page.module.css";
 import { useRouter } from "next/navigation";
+// import WeatherCell from "@/components/WeatherCell";
+import { getWeather } from "@/tools/get-weather";
 
 export interface User {
   fullName: string;
@@ -15,6 +17,32 @@ export interface User {
 export default function Account() {
   const [user, setUser] = useState<User | null>(null);
   const router = useRouter();
+
+  const [weather, setWeather] = useState<{ currentTemp: string; city: string } | null>(null);
+
+  useEffect(() => {
+    async function fetchWeather() {
+      try {
+        const res = await fetch(
+          'https://api.openweathermap.org/data/2.5/forecast?lat=59.9386&lon=30.3141&cnt=5&units=metric&lang=ru&appid=5bd04c390deae29cb691f4d07132d6f6'
+        );
+        if (!res.ok) throw new Error('Ошибка при получении погоды');
+
+        const data = await res.json();
+
+        const currentTemp = Math.round(data.list[0].main.temp) + '°';
+        const city = data.city.name;
+
+        setWeather({ currentTemp, city });
+      } catch (e) {
+        console.error('Ошибка погоды:', e);
+      }
+    }
+
+    fetchWeather();
+  }, []);
+
+
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -75,23 +103,24 @@ export default function Account() {
 
   if (!user) {
     // Display a loading state while the user data is being fetched
-    return <div style={{ display: 'flex', justifyContent: 'center',flexDirection: 'column', alignItems: 'center', height: '100vh' }}>
+    return <div style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center', height: '100vh' }}>
       <div className={styles.loader}></div>
-      <h2>Loading...</h2>
-      </div>;
+      <h3>Loading...</h3>
+    </div>;
   }
 
   return (
     <>
       <div className={styles.header}>
-        <h2>Главная</h2>
+        {/* <h2>Главная</h2> */}
+        <h3>Привет,&nbsp;{user.fullName}</h3>
         <div className={styles.hiUser}>
-          <h3>Привет,&nbsp;{user.fullName}</h3>
-          <img src="/userAvatar.png" className={styles.userAvatar} />
+          {/* <h3>Привет,&nbsp;{user.fullName}</h3> */}
+          {/* <img src="/userAvatar.png" className={styles.userAvatar} /> */}
         </div>
       </div>
 
-       <div className={styles.grid}>
+      <div className={styles.grid}>
         <div className={styles.column}>
           <Cell header="Одежда" bigText={user.clothesCount.toString()} info1={"+" + user.clothesLastMonth} info=" за последний месяц" />
           {/* <Cell header="Просмотры" bigText="1.2M" info1="+40к " info=" за последний месяц" /> */}
@@ -101,7 +130,7 @@ export default function Account() {
           {/* <CellImg header="История образов" /> */}
         </div>
         <div className={`${styles.column} ${styles.large}`}>
-          <div className={`${styles.cell} ${styles.large}`}>
+          {/* <div className={`${styles.cell} ${styles.large}`}>
             <h6>Погода</h6>
             <div className={styles.gradus}>
               <img src="/weather.png" className={styles.weatherIcon} />
@@ -134,9 +163,17 @@ export default function Account() {
                 </tbody>
               </table>
             </div>
-          </div>
+          </div> */}
+
+          <Cell
+            header="Погода"
+            bigText={weather?.currentTemp ?? '...'}
+            info1="&#128205;"
+            info={weather?.city ?? '...'}
+          />
+
         </div>
-      </div> 
+      </div>
     </>
   );
 }

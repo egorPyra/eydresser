@@ -32,6 +32,7 @@ model Clothes {
     color    String?
     material String?
     season   String?
+    description String?
 
     userId Int
     user   User @relation(fields: [userId], references: [id])
@@ -40,6 +41,8 @@ model Clothes {
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
+    
+    @@unique([id,userId])
 }
 
 model Outfit {

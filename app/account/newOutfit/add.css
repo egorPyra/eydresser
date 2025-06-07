@@ -12,16 +12,22 @@
     border-radius: 12px;
     width: 350px;
     height: 48px;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     color: #000;
     font-size: 1rem;
     padding: 0 10px;
 }
 
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+
 .authButton {
-    background: #3498DB;
+    background: #3498DB10;
     border: none;
-    width: 350px;
+    width: 50px;
     height: 48px;
     border-radius: 12px;
     font-family: "Raleway", sans-serif;
@@ -31,37 +37,134 @@
     font-size: 1.2em;
     line-height: 100%;
     color: #FFF;
-    margin-bottom: 10px;
+    /* margin-top: 30px; */
+    margin-bottom: 0px;
     cursor: pointer;
 }
+
+/* Контейнер для кнопки и поля */
+.aiButtonGroup {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 280px;
+  height: 48px;
+  transition: width 0.4s ease;
+}
+
+/* Поле ввода — спрятано по умолчанию */
+.aiInput {
+  width: 0;
+  overflow: hidden;
+  pointer-events: none;
+  border: none;
+  transition: width 0.4s ease, padding 0.4s ease;
+  height: 100%;
+  border-radius: 8px 0 0 8px;
+  padding: 0;
+  font-size: 14px;
+  background: white;
+  box-sizing: border-box;
+}
+
+
+/* Кнопка */
+.aiButton {
+  width: 280px;
+  height: 48px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(270deg, #3498DB10, #ffbdf4, #ca9cff, #3498DB10);
+  background-size: 800% 800%;
+  animation: gradientMove 10s ease infinite;
+  font-family: "Raleway", sans-serif;
+  font-weight: 600;
+  font-size: 1.3em;
+  color: #333;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+  box-shadow: 0 0 3px rgba(0, 255, 255, 0.5),
+              0 0 5px rgba(138, 43, 226, 0.5),
+              0 0 4px rgba(255, 0, 255, 0.3),
+              inset 0 0 1px rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  transition: width 0.4s ease, border-radius 0.4s ease;
+  z-index: 1;
+}
+
+/* Когда раскрыто */
+.aiButtonGroup.expanded .aiButton {
+  width: 58px;
+  border-radius: 0 8px 8px 0;
+  background: linear-gradient(270deg, #3498db, #972484, #6929b3, #3498DB);
+  background-size: 800% 800%;
+  animation: gradientMove 10s ease infinite;
+  
+}
+
+/* Показываем input */
+.aiButtonGroup.expanded .aiInput {
+  width: 100%;
+  pointer-events: auto;
+  border: 1px solid #ccc;
+  padding: 0 12px;
+}
+
+
+
+@keyframes gradientMove {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 0.4;
+    }
+
+    50% {
+        transform: scale(1.4);
+        opacity: 0.4;
+    }
+}
+
 
 .content {
     display: flex;
 }
 
-.greyZone {
-    width: 30vw;
-    height: 30vw;
-    background-color: #E7E7E7;
-    border-radius: 15px;
-    margin-right: 20px;
+.tools {
+    width: 350px;
+    height: 540px;
 }
 
+
 .addFromDevice {
-    border-radius: 15px;
-    
-    border: 3px dashed #333333;
+    border-radius: 10px;
+    border: 2px dashed #ccc;
     min-width: 320px;
-    height: 216px;
+    height: 116px;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     cursor: pointer;
+    margin-bottom: 30px;
 }
 
 .addFromDevice.dragActive {
-    border: 2px dashed #3498DB;
+    border: 2px dashed #ccc;
     background-color: rgba(52, 152, 219, 0.1);
     border: 3px dashed #333333;
     min-width: 320px;
@@ -74,11 +177,12 @@
 }
 
 .addFromDevice p {
-    color: #3498DB;
+    color: #777;
 }
 
 .addFromDevice span {
-    color: #333333;
+    color: #999;
+    font-family: 'Raleway', sans-serif;
 }
 
 .rotate {
@@ -125,49 +229,95 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    max-width: 320px;
+    /* max-width: 320px; */
     margin: 30px 0;
 }
 
 .greyZone {
-    width: 100%;
-    min-width: 200px;
-    height: 600px;
-    max-height: 60vh;
+    /* width: 90%; */
+    width: 540px;
+    height: 540px;
+    /* aspect-ratio: 1/1; */
     background-color: #e0e0e0;
     position: relative;
     overflow: hidden;
-  }
-  
-  .draggableImage {
+
+    background-color: #E7E7E7;
+    border-radius: 15px;
+    margin-right: 20px;
+}
+
+.draggableImage {
     width: 100px;
     height: 100px;
     cursor: default;
-  }
+}
 
-  .draggableImage button {
+.draggableImage button {
     cursor: move;
-  }
-  
-  .draggableImage img {
+}
+
+.draggableImage img {
     width: 100%;
     height: 100%;
     object-fit: contain;
-  }
-  
+}
+
 .itemsGrid {
+    max-height: 240px;
+    overflow-y: auto;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 10px;
 }
-  
-  .closetItem {
-    width: 100%;
+
+.itemsGrid::-webkit-scrollbar {
+    width: 6px;
+}
+
+.itemsGrid::-webkit-scrollbar-thumb {
+    background-color: #aaa;
+    border-radius: 4px;
+}
+
+
+.closetItem {
+    /* max-height: 500px; */
+    overflow-y: auto;
+    /* padding-right: 6px; */
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+    object-fit: contain;
+    aspect-ratio: 1/1;
     background-color: #F5F5F5;
     border-radius: var(--border-radius);
-    padding: 0,5rem;
-  }
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    overflow: hidden;
+    object-fit: contain;
+    aspect-ratio: 1/1;
+}
 
-  .closetImage {
-    max-width: 100px;
+.closetImage {
+    max-width: 80px;
+    
+}
+
+.loader {
+  width: 25px;
+  height: 25px;
+  border: 5px solid rgba(0, 0, 0, 0.2);
+  border-top-color: #000;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+  margin: auto;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
   }
+}

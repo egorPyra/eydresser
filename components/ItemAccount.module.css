@@ -3,8 +3,10 @@
     flex-direction: column;
     justify-content: center;
     /* align-items: center; */
-    width: 20vw;
-    height: 20vw;
+    width: 100%;
+    aspect-ratio: 1/1;
+    max-height: 200px;
+    margin: 0 auto;
     background-color: #F5F5F5;
     border-radius: var(--border-radius);
     padding: 1rem;
@@ -17,10 +19,10 @@
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
-.item {
+/* .item {
     min-width: 200px;
     min-height: 200px;
-}
+} */
 
 .imgWrapper {
     width: 80%;

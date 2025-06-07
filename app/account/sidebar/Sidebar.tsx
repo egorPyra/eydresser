@@ -11,14 +11,14 @@ export default function Sidebar() {
     const pathname = usePathname();
 
     const menuItems = [
-        {icon: '/sidebarIcons/main.svg', name: 'главная', link: '/account'},
-        {icon: '/sidebarIcons/closet.svg', name: 'шкаф', link: '/account/closet'},
-        {icon: '/sidebarIcons/styles.svg', name: 'образы', link: '/account/outfit' },
-        {icon: '/sidebarIcons/heart.svg', name: 'понравилось', link: '/account/liked', status: 'hidden'},
-        {icon: '/sidebarIcons/settings.svg', name: 'настройки', link: '/account/settings'},
-        {icon: '/sidebarIcons/add.svg', name: 'создать образ', link: '/account/newOutfit'},
+        {icon: '/sidebarIcons/main.svg', name: 'Главная', link: '/account'},
+        {icon: '/sidebarIcons/closet.svg', name: 'Шкаф', link: '/account/closet'},
+        {icon: '/sidebarIcons/styles.svg', name: 'Образы', link: '/account/outfit', status:''},
+        // {icon: '/sidebarIcons/heart.svg', name: 'понравилось', link: '/account/liked', status: 'hidden'},
+        {icon: '/sidebarIcons/settings.svg', name: 'Настройки', link: '/account/settings'},
+        {icon: '/sidebarIcons/add.svg', name: 'Создать образ', link: '/account/newOutfit'},
 
-        {icon: '/sidebarIcons/exit.svg', name: 'выйти', link: '../login'},
+        {icon: '/sidebarIcons/exit.svg', name: 'Выйти', link: '../login'},
     ];
 
     const getMenuItemClassName = (link: string | null, status: string | undefined) => {
@@ -51,7 +51,7 @@ export default function Sidebar() {
                                 </Link>
                             ) : (
                                 <Link href={item.link}>
-                                    <Image src={item.icon} width={20} height={20} alt="icon"/>
+                                    {/* <Image src={item.icon} width={20} height={20} alt="icon"/> */}
                                     <h3>{item.name}</h3>
                                 </Link>
                             )}
