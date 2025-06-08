@@ -40,73 +40,84 @@
     /* margin-top: 30px; */
     margin-bottom: 0px;
     cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.authButton:hover {
+    transform: scale(1.02);
+    background: #3498DB30;
+
 }
 
 /* Контейнер для кнопки и поля */
 .aiButtonGroup {
-  position: relative;
-  display: flex;
-  align-items: center;
-  width: 280px;
-  height: 48px;
-  transition: width 0.4s ease;
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 280px;
+    height: 48px;
+    transition: width 0.4s ease;
 }
 
 /* Поле ввода — спрятано по умолчанию */
 .aiInput {
-  width: 0;
-  overflow: hidden;
-  pointer-events: none;
-  border: none;
-  transition: width 0.4s ease, padding 0.4s ease;
-  height: 100%;
-  border-radius: 8px 0 0 8px;
-  padding: 0;
-  font-size: 14px;
-  background: white;
-  box-sizing: border-box;
+    width: 0;
+    overflow: hidden;
+    pointer-events: none;
+    border: none;
+    transition: width 0.4s ease, padding 0.4s ease;
+    height: 100%;
+    border-radius: 8px 0 0 8px;
+    padding: 0;
+    font-size: 14px;
+    background: white;
+    box-sizing: border-box;
 }
 
 
 /* Кнопка */
 .aiButton {
-  width: 280px;
-  height: 48px;
-  border: none;
-  border-radius: 12px;
-  background: linear-gradient(270deg, #3498DB10, #ffbdf4, #ca9cff, #3498DB10);
-  background-size: 800% 800%;
-  animation: gradientMove 10s ease infinite;
-  font-family: "Raleway", sans-serif;
-  font-weight: 600;
-  font-size: 1.3em;
-  color: #333;
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
-  box-shadow: 0 0 3px rgba(0, 255, 255, 0.5),
-              0 0 5px rgba(138, 43, 226, 0.5),
-              0 0 4px rgba(255, 0, 255, 0.3),
-              inset 0 0 1px rgba(255, 255, 255, 0.2);
-  cursor: pointer;
-  transition: width 0.4s ease, border-radius 0.4s ease;
-  z-index: 1;
+    width: 280px;
+    height: 48px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(270deg, #3498DB40, #ffbdf450, #ca9cff50, #3498DB40);
+    background-size: 800% 800%;
+    animation: gradientMove 10s ease infinite;
+    font-family: "Raleway", sans-serif;
+    font-weight: 600;
+    font-size: 1.3em;
+    color: #333;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+    cursor: pointer;
+    transition: width 0.4s ease, border-radius 0.4s ease;
+    z-index: 1;
+    transition: all ease 0.3s;
+}
+
+.aiButton:hover {
+    transform: scale(1.02);
+    background: linear-gradient(270deg, #3498DB50, #ffbdf460, #ca9cff60, #3498DB50);
+    background-size: 800% 800%;
+    animation: gradientMove 10s ease infinite;
 }
 
 /* Когда раскрыто */
 .aiButtonGroup.expanded .aiButton {
-  width: 58px;
-  border-radius: 0 8px 8px 0;
-  background: linear-gradient(270deg, #3498db, #972484, #6929b3, #3498DB);
-  background-size: 800% 800%;
-  animation: gradientMove 10s ease infinite;
-  
+    width: 58px;
+    border-radius: 0 8px 8px 0;
+    background: linear-gradient(270deg, #3498db, #972484, #6929b3, #3498DB);
+    background-size: 800% 800%;
+    animation: gradientMove 10s ease infinite;
+
 }
 
 /* Показываем input */
 .aiButtonGroup.expanded .aiInput {
-  width: 100%;
-  pointer-events: auto;
-  border: 1px solid #ccc;
-  padding: 0 12px;
+    width: 100%;
+    pointer-events: auto;
+    border: 1px solid #ccc;
+    padding: 0 12px;
 }
 
 
@@ -147,6 +158,7 @@
 .tools {
     width: 350px;
     height: 540px;
+    margin-bottom: 100px;
 }
 
 
@@ -303,21 +315,21 @@
 
 .closetImage {
     max-width: 80px;
-    
+
 }
 
 .loader {
-  width: 25px;
-  height: 25px;
-  border: 5px solid rgba(0, 0, 0, 0.2);
-  border-top-color: #000;
-  border-radius: 50%;
-  animation: spin 0.6s linear infinite;
-  margin: auto;
+    width: 25px;
+    height: 25px;
+    border: 5px solid rgba(0, 0, 0, 0.2);
+    border-top-color: #000;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+    margin: auto;
 }
 
 @keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
+    to {
+        transform: rotate(360deg);
+    }
 }

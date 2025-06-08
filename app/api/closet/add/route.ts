@@ -67,7 +67,8 @@ export async function POST(req: NextRequest) {
           type: clothingAttributes.type || '',
           color: clothingAttributes.color || '',
           season: clothingAttributes.season || '',
-          material: clothingAttributes.material || ''
+          material: clothingAttributes.material || '',
+          description: clothingAttributes.description || '',
         },
       });
 

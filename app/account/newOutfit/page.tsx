@@ -434,7 +434,7 @@ function OutfitCreator({ outfitId }: { outfitId: string | null }) {
               <input
                 type="text"
                 className="aiInput"
-                placeholder="Что вы хотите надеть?"
+                placeholder="Для какого события?"
                 value={aiPrompt}
                 onChange={(e) => setAiPrompt(e.target.value)}
               />
